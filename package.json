@@ -73,6 +73,7 @@
     "@rspack/cli": "^0.7.5",
     "@rspack/core": "^0.7.5",
     "assert": "^2.0.0",
+    "bos-workspace": "^1.0.0-alpha.37",
     "browserify-zlib": "^0.2.0",
     "buffer": "^6.0.3",
     "clean-webpack-plugin": "^4.0.0",
