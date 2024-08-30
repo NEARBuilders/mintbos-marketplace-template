@@ -32,6 +32,8 @@
   },
   "scripts": {
     "rspack": "rspack build",
+    "bw": "bos-workspace",
+    "dev:bos": "yarn run bw dev",
     "dev": "yarn run rspack --env mode=development",
     "prod": "yarn run rspack --env mode=production",
     "prod:analyze": "yarn run prod --analyze",

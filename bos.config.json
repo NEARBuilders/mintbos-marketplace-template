@@ -1,0 +1,5 @@
+{
+    "account": "blackdrogon.near",
+    "aliases": ["./aliases.mainnet.json"],
+    "index":"blackdrogon.near/widget/app"
+}
