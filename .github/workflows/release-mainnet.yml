@@ -1,0 +1,16 @@
+name: Deploy Components to Mainnet
+on:
+  push:
+    branches: [main]
+jobs:
+  deploy-mainnet:
+    uses: NEARBuilders/bos-workspace/.github/workflows/deploy.yml@main
+    with:
+      bw-legacy: false
+      deploy-env: "mainnet"
+      app-name: "bos-blackdragon-marketplace"
+      deploy-account-address: blackdragon.near
+      signer-account-address: blackdragon.near
+      signer-public-key: ${{ vars.BOS_BLACKDRAGON_MARKETPLACE_PUBLIC_KEY }}
+    secrets:
+      SIGNER_PRIVATE_KEY: ${{ secrets.BOS_BLACKDRAGON_MARKETPLACE_SIGNER_KEY }}
