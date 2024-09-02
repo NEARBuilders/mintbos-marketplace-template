@@ -101,7 +101,7 @@ describe("hot-reload", () => {
 
       io = new Server(httpServer, {
         cors: {
-          origin: `http://${HOST}:3000`,
+          origin: `http://${HOST}:8080`,
           methods: ["GET", "POST"],
         },
       });

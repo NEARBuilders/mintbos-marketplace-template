@@ -1,6 +1,6 @@
 {
   "name": "near-bos-webcomponent",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "homepage": "https://github.com/NEARBuilders/near-bos-webcomponent",
   "repository": {
     "type": "git",
@@ -33,8 +33,9 @@
   "scripts": {
     "rspack": "rspack build",
     "bw": "bos-workspace",
-    "dev:bos": "yarn run bw dev",
-    "dev": "yarn run rspack --env mode=development",
+    "dev": "yarn run clean && concurrently \"yarn run dev:gateway\" \"wait-on dist/index.html && yarn run dev:apps\"",
+    "dev:apps": "yarn run bw dev",
+    "dev:gateway": "yarn run rspack --env mode=development --watch",
     "prod": "yarn run rspack --env mode=production",
     "prod:analyze": "yarn run prod --analyze",
     "build": "yarn run prod",
@@ -72,13 +73,14 @@
   },
   "devDependencies": {
     "@playwright/test": "^1.38.1",
-    "@rspack/cli": "^0.7.5",
-    "@rspack/core": "^0.7.5",
+    "@rspack/cli": "^1.0.0",
+    "@rspack/core": "^1.0.0",
     "assert": "^2.0.0",
     "bos-workspace": "^1.0.0-alpha.37",
     "browserify-zlib": "^0.2.0",
     "buffer": "^6.0.3",
     "clean-webpack-plugin": "^4.0.0",
+    "concurrently": "^8.2.2",
     "cross-env": "^7.0.3",
     "crypto-browserify": "^3.12.0",
     "css-loader": "^6.2.0",
@@ -102,6 +104,7 @@
     "stream-http": "^3.2.0",
     "style-loader": "^3.2.1",
     "url": "^0.11.0",
+    "wait-on": "^8.0.0",
     "webpack-merge": "^5.8.0"
   },
   "nearfs": {
