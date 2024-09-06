@@ -89,7 +89,7 @@ const home = ({ storeId }) => {
           </div>
         </>
       ) : (
-        <h5>The store has no listed NFTs yet.</h5>
+        <h5>There's nothing to show yet.</h5>
       )}
     </Root>
   );

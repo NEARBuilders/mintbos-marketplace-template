@@ -1,12 +1,25 @@
+const { href } = VM.require("buildhub.near/widget/lib.url") || {
+  href: () => {},
+};
 const Card = ({ data }) => {
+  if (!data) {
+    return "Loading";
+  }
+  const size = "100%";
   return (
     <div className="d-flex flex-column gap-1 w-15 p-3">
-      <Link
-        to={`{config_index}?page=product&contractId=${data.nft_contract_id}&metadataId=${data?.metadata_id}`}
-        target="_blank"
+      <a
+        href={href({
+          widgetSrc: "${config_account}/widget/Index",
+          params: {
+            page: "product",
+            contractId: data?.nft_contract_id,
+            metadataId: data?.metadata_id,
+          },
+        })}
       >
         <Widget
-          src="{alias_MOB}/widget/NftImage"
+          src="${alias_MOB}/widget/NftImage"
           props={{
             nft: {
               tokenId: data?.token_id,
@@ -14,7 +27,7 @@ const Card = ({ data }) => {
             },
             style: {
               width: size,
-              height: size,
+              height: "300px",
               objectFit: "cover",
               minWidth: size,
               minHeight: size,
@@ -27,12 +40,11 @@ const Card = ({ data }) => {
               "https://ipfs.near.social/ipfs/bafkreihdiy3ec4epkkx7wc4wevssruen6b7f3oep5ylicnpnyyqzayvcry",
           }}
         />
-      </Link>
+      </a>
       <button
-        disabled={!accountId}
+        // disabled={!accountId}
         onClick={() => {
-          if (!accountId) return;
-          buy(priceYocto, data?.token_id, data?.nft_contract_id);
+          //add this NFT as json object to the connect user's social DB account
         }}
         style={{
           border: "1px solid black",
@@ -42,8 +54,10 @@ const Card = ({ data }) => {
           cursor: "pointer",
         }}
       >
-        Buy {priceNear} N
+        Add to cart
       </button>
     </div>
   );
 };
+
+return <Card {...props} />;

@@ -1,10 +1,10 @@
 const { isDarkModeOn, data, NftCount, listingCount } = props;
 const { buyToken } = VM.require(
-  "${config_account}/widget/Mintbase.NFT.modules"
+  "${alias_GENADROP}/widget/Mintbase.NFT.modules"
 );
 
 const { buyTokenAsADao } = VM.require(
-  "${config_account}/widget/Mintbase.utils.sdk"
+  "${alias_GENADROP}/widget/Mintbase.utils.sdk"
 ) || { buyTokenAsADao: () => {} };
 
 const { href } = VM.require("buildhub.near/widget/lib.url") || {
@@ -424,7 +424,7 @@ return !data ? (
             <small>Contract</small>
             <Link
               to={href({
-                widgetSrc: "${config_account}/widget/Mintbase.App.Index",
+                widgetSrc: "${alias_GENADROP}/widget/Mintbase.App.Index",
                 params: {
                   page: "contract",
                   accountId: data?.nft_contract_id,
@@ -438,7 +438,7 @@ return !data ? (
             <small>Owner</small>
             <Link
               to={href({
-                widgetSrc: "${config_account}/widget/Mintbase.App.Index",
+                widgetSrc: "${alias_GENADROP}/widget/Mintbase.App.Index",
                 params: {
                   page: "human",
                   accountId: data?.owner,
