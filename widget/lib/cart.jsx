@@ -46,6 +46,7 @@ return {
     }
 
     Storage.set(CART_KEY, JSON.stringify(cart));
+    console.log("added successfully to cart", cart);
   },
   removeItemsFromCart: (items) => {
     const cart = JSON.parse(
