@@ -1,7 +1,7 @@
 const { isDarkModeOn, data, NftCount, listingCount } = props;
 const { buyToken } = VM.require(
   "${alias_GENADROP}/widget/Mintbase.NFT.modules"
-);
+) || { buyToken: () => {} };
 
 const { buyTokenAsADao } = VM.require(
   "${alias_GENADROP}/widget/Mintbase.utils.sdk"
