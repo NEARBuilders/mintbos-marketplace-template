@@ -145,10 +145,10 @@ const Container = styled.div`
     background: #ffffff;
     text-decoration: none;
     border-radius: 5px;
-    color:  #000000;
+    color: #000000;
   }
   .title {
-    color:  #000000;
+    color: #000000;
     margin: 20px 0;
     font-size: 30px;
     font-weight: 500;
@@ -177,7 +177,7 @@ const Container = styled.div`
     }
   }
   .text-desc {
-    color: "#164b8e;
+    color: "#164b8e";
   }
   .minter {
     margin-top: 20px;
@@ -191,14 +191,14 @@ const Container = styled.div`
     margin-top: 20px;
     flex-direction: column;
     gap: 20px;
-    color:  #000000;
+    color: #000000;
   }
   .btn-nft {
     border: 1px solid #000000;
     background: none;
     padding: 3px 6px;
     border-radius: 5px;
-    color:  #000000;
+    color: #000000;
     cursor: pointer;
   }
   .split {
@@ -225,14 +225,14 @@ const Container = styled.div`
     border-radius: 5px;
     overflow: hidden;
     transition: height 0.25s ease-out;
-    color:  #000000;
+    color: #000000;
   }
   .split-title {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
     margin-bottom: 20px;
-    color:  #000000;
+    color: #000000;
   }
   .left {
     margin-top: 10px;
@@ -278,7 +278,7 @@ const Container = styled.div`
     }
   }
   .right-main {
-    color:  #000000;
+    color: #000000;
     padding: 10px 20px;
     margin-top: 10px;
   }
@@ -300,10 +300,10 @@ const Container = styled.div`
     text-overflow: ellipsis;
   }
   .text {
-    color:  #000000;
+    color: #000000;
   }
   .btn-cus {
-    background:  #000000;
+    background: #000000;
     border: none;
     border-radius: 5px;
     outline: none;

@@ -1,9 +1,11 @@
-const { isDarkModeOn, accountId, connectedDao } = props;
-const metadataId =
-  props.metadataId || "nft.herewallet.near:d96acabbdb8bc6ad1317385be84030ed";
+const { isDarkModeOn, metadataId, accountId, connectedDao } = props;
+
+if (!metadataId) {
+  return <h1>NFT Metadata ID not provided</h1>
+}
 const extractedContactId = metadataId.split(":")[0];
 const contractId =
-  props.contractId || extractedContactId || "nft.herewallet.near";
+  props.contractId || extractedContactId;
 
 const buySvg = (
   <svg
@@ -105,7 +107,7 @@ const ModalBg = styled.div`
 const [modalState, setModalState] = useState("");
 
 const fetchStoreFrontData = (nftId) => {
-  const response2 = fetch("https://graph.mintbase.xyz/mainnet", {
+  const response = fetch("https://graph.mintbase.xyz/mainnet", {
     method: "POST",
     headers: {
       "mb-api-key": "anon",
@@ -179,19 +181,18 @@ const fetchStoreFrontData = (nftId) => {
         `,
     }),
   });
-  //return response2.body.data;
-  State.update({
-    listingCount: response2?.body?.data?.listingsCount?.aggregate?.count,
-    infoNFT: response2.body.data.mb_views_nft_tokens[0],
-    NftCount:
-      response2.body.data.mb_views_nft_tokens[0].listings_aggregate.aggregate
+  return {
+    listingCount: response?.body?.data?.listingsCount?.aggregate?.count,
+    infoNFT: response.body.data.mb_views_nft_tokens[0],
+    nftCount:
+      response.body.data.mb_views_nft_tokens[0].listings_aggregate.aggregate
         .count,
-    dataTransaction: response2.body.data.mb_views_nft_activities_rollup,
-  });
+    dataTransaction: response.body.data.mb_views_nft_activities_rollup,
+  };
 };
 
 const fetchNFTData = (contractId) => {
-  const response2 = fetch("https://graph.mintbase.xyz/mainnet", {
+  const response = fetch("https://graph.mintbase.xyz/mainnet", {
     method: "POST",
     headers: {
       "mb-api-key": "anon",
@@ -216,19 +217,22 @@ const fetchNFTData = (contractId) => {
         `,
     }),
   });
-  State.update({
-    dataNFT: response2.body.data.mb_views_active_listings,
-  });
+  return response.body.data.mb_views_active_listings;
 };
-fetchNFTData(contractId);
-fetchStoreFrontData(metadataId);
+const nftData = fetchNFTData(contractId);
+const { listingCount, infoNFT, nftCount, dataTransaction } = fetchStoreFrontData(metadataId);
+
 const isMintedContract = ["mintbase1.near", "mintspace2.testnet"].some(
   (substring) => contractId?.includes(substring)
 );
 
+if (!infoNFT) {
+  return <h1>Loading...</h1>;
+}
+
 return (
   <>
-    {state.infoNFT.owner == context.accountId && (
+    {infoNFT.owner == context.accountId && (
       <Navbar>
         <div className="container">
           {isMintedContract ? (
@@ -266,7 +270,7 @@ return (
             <Widget
               src={`${alias_GENADROP}/widget/Mintbase.NFT.MBSellOption`}
               props={{
-                data: state.infoNFT,
+                data: infoNFT,
                 isDarkModeOn,
                 connectedDao: connectedDao,
                 onClose: () => setModalState(""),
@@ -277,7 +281,7 @@ return (
             <Widget
               src={`${alias_GENADROP}/widget/Mintbase.NFT.TransferOption`}
               props={{
-                data: state.infoNFT,
+                data: infoNFT,
                 isDarkModeOn,
                 onClose: () => setModalState(""),
               }}
@@ -287,7 +291,7 @@ return (
             <Widget
               src={`${alias_GENADROP}/widget/Mintbase.NFT.Burn`}
               props={{
-                data: state.infoNFT,
+                data: infoNFT,
                 type: "BURN",
                 isDarkModeOn,
                 onClose: () => setModalState(""),
@@ -298,7 +302,7 @@ return (
             <Widget
               src={`${alias_GENADROP}/widget/Mintbase.NFT.Burn`}
               props={{
-                data: state.infoNFT,
+                data: infoNFT,
                 type: "MULTIPLY",
                 isDarkModeOn,
                 onClose: () => setModalState(""),
@@ -312,9 +316,9 @@ return (
       src={"${config_account}/widget/components.NFT.Details"}
       props={{
         isDarkModeOn,
-        data: state.infoNFT,
-        NftCount: state.NftCount,
-        listingCount: state.listingCount,
+        data: infoNFT,
+        NftCount: nftCount,
+        listingCount: listingCount,
       }}
     />
     {/* <Widget

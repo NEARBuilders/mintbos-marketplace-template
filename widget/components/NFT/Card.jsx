@@ -8,8 +8,8 @@ const Card = ({ data }) => {
   const size = "100%";
   return (
     <div className="d-flex flex-column gap-1 w-15 p-3">
-      <a
-        href={href({
+      <Link
+        to={href({
           widgetSrc: "${config_account}/widget/Index",
           params: {
             page: "product",
@@ -40,7 +40,7 @@ const Card = ({ data }) => {
               "https://ipfs.near.social/ipfs/bafkreihdiy3ec4epkkx7wc4wevssruen6b7f3oep5ylicnpnyyqzayvcry",
           }}
         />
-      </a>
+      </Link>
       <button
         // disabled={!accountId}
         onClick={() => {

@@ -180,7 +180,6 @@ const Footer = () => (
 const Sidebar = () => (
   <div className="sidebar">
     <NavLink to={"home"}>home</NavLink>
-    <NavLink to={"product"}>product</NavLink>
     <NavLink to={"cart"}>cart</NavLink>
   </div>
 );
@@ -188,7 +187,7 @@ const Sidebar = () => (
 const Content = () => (
   <Layout>
     <div style={{ minHeight: "80vh" }}>
-      <Router config={routerConfig} page={page} />
+      <Router config={routerConfig} page={page} {...props} />
     </div>
   </Layout>
 );
