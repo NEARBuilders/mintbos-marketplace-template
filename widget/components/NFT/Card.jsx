@@ -1,6 +1,15 @@
 const { href } = VM.require("buildhub.near/widget/lib.url") || {
   href: () => {},
 };
+const { addItemsToCart, removeItemsFromCart, itemExistsInCart } = VM.require(
+  "${config_account}/widget/lib.cart"
+) || {
+  addItemsToCart: () => {},
+  removeItemsFromCart: () => {},
+  itemExistsInCart: () => false,
+};
+
+const existsInCart = itemExistsInCart(data);
 const Card = ({ data }) => {
   if (!data) {
     return "Loading";
@@ -42,9 +51,13 @@ const Card = ({ data }) => {
         />
       </Link>
       <button
-        // disabled={!accountId}
         onClick={() => {
-          //add this NFT as json object to the connect user's social DB account
+          if (existsInCart) {
+            removeItemsFromCart([data]);
+          } else {
+            // item.ft = "NEAR";
+            addItemsToCart([data]);
+          }
         }}
         style={{
           border: "1px solid black",
@@ -54,7 +67,7 @@ const Card = ({ data }) => {
           cursor: "pointer",
         }}
       >
-        Add to cart
+        {existsInCart ? "Remove from cart" : "Add to cart"}
       </button>
     </div>
   );
