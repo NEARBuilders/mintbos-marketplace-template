@@ -141,7 +141,15 @@ const Card = ({ data }) => {
           cursor: "pointer",
         }}
       >
-        {existsInCart ? "Remove from cart" : `Add to cart ${priceInNear} `}
+        {existsInCart
+          ? "Remove from cart"
+          : `Add to cart ${
+              data.price
+                ? data.currency === "near"
+                  ? priceInNear
+                  : (data?.price / 1000000).toFixed(2)
+                : "-"
+            }`}
         {!existsInCart && listingType[data?.currency]}
       </button>
     </div>
