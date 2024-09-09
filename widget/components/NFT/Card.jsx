@@ -9,11 +9,11 @@ const { addItemsToCart, removeItemsFromCart, itemExistsInCart } = VM.require(
   itemExistsInCart: () => false,
 };
 
-const existsInCart = itemExistsInCart(data);
 const Card = ({ data }) => {
   if (!data) {
     return "Loading";
   }
+  const existsInCart = itemExistsInCart(data);
   const size = "100%";
   return (
     <div className="d-flex flex-column gap-1 w-15 p-3">
