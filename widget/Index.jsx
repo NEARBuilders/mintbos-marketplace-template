@@ -15,7 +15,7 @@ const { href } = VM.require("${alias_DEVS}/widget/lib.url") || {
 };
 
 const { getCartItemCount } = VM.require(
-  "${config_account}/widget/SDK.cart"
+  "${config_account}/widget/lib.cart"
 ) || {
   getCartItemCount: () => {},
 };
