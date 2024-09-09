@@ -25,7 +25,7 @@ return {
     let total = 0;
 
     Object.values(cart).forEach((item) => {
-      total += item.price;
+      total += Number(item.price);
     });
 
     return total;
