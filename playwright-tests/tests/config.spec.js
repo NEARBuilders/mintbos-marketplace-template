@@ -32,7 +32,7 @@ describe("test data-component attribute", () => {
     page,
   }) => {
     const src = "meta-pool-official.near/widget/MetaPoolStakeEth";
-		const config = { "vm": { "features": {"enableComponentSrcDataKey": true }}}
+    const config = { vm: { features: { enableComponentSrcDataKey: true } } };
 
     await setupNearSocialViewer(page, src, config);
 

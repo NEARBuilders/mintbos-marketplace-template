@@ -1,5 +1,5 @@
 const path = require("path");
-const { HotModuleReplacementPlugin } = require('@rspack/core');
+const { HotModuleReplacementPlugin } = require("@rspack/core");
 
 module.exports = () => ({
   devtool: "inline-source-map",

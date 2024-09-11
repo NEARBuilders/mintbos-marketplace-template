@@ -1,11 +1,10 @@
 const { isDarkModeOn, metadataId, accountId, connectedDao } = props;
 
 if (!metadataId) {
-  return <h1>NFT Metadata ID not provided</h1>
+  return <h1>NFT Metadata ID not provided</h1>;
 }
 const extractedContactId = metadataId.split(":")[0];
-const contractId =
-  props.contractId || extractedContactId;
+const contractId = props.contractId || extractedContactId;
 
 const buySvg = (
   <svg
@@ -220,7 +219,8 @@ const fetchNFTData = (contractId) => {
   return response.body.data.mb_views_active_listings;
 };
 const nftData = fetchNFTData(contractId);
-const { listingCount, infoNFT, nftCount, dataTransaction } = fetchStoreFrontData(metadataId);
+const { listingCount, infoNFT, nftCount, dataTransaction } =
+  fetchStoreFrontData(metadataId);
 
 const isMintedContract = ["mintbase1.near", "mintspace2.testnet"].some(
   (substring) => contractId?.includes(substring)
