@@ -25,13 +25,13 @@ const Navbar = styled.div`
   display: flex;
   flex-direction: row;
   align-items: center;
-  background: ${isDarkModeOn ? "#282a3a" : "#f6f5f4"};
+  background: #f6f5f4;
   height: 50px;
   width: 100%;
   .buy {
     background: none;
     border: 1px solid #5b5d6b;
-    color: ${isDarkModeOn ? "#ffffff" : "#000000"};
+    color: #000000;
     outline: none;
     margin-top: 30px;
     padding: 5px 20px;
@@ -55,7 +55,7 @@ const Navbar = styled.div`
   .button {
     background: none;
     border: 1px solid #5b5d6b;
-    color: ${isDarkModeOn ? "#ffffff" : "#000000"};
+    color: #000000;
     outline: none;
     padding: 5px 20px;
     border-radius: 5px;
