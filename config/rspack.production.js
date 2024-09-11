@@ -1,4 +1,4 @@
-const rspack = require('@rspack/core');
+const rspack = require("@rspack/core");
 const path = require("path");
 
 module.exports = () => {
@@ -55,7 +55,7 @@ module.exports = () => {
       new rspack.CssExtractRspackPlugin({
         filename: "styles/[name].[contenthash].css",
         chunkFilename: "[id].css",
-      })
+      }),
     ],
     optimization: {
       minimize: true,
@@ -67,7 +67,7 @@ module.exports = () => {
             compress: {
               drop_console: true,
             },
-          }
+          },
         }),
       ],
       runtimeChunk: {

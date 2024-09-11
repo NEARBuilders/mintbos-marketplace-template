@@ -1,11 +1,10 @@
 const { isDarkModeOn, metadataId, accountId, connectedDao } = props;
 
 if (!metadataId) {
-  return <h1>NFT Metadata ID not provided</h1>
+  return <h1>NFT Metadata ID not provided</h1>;
 }
 const extractedContactId = metadataId.split(":")[0];
-const contractId =
-  props.contractId || extractedContactId;
+const contractId = props.contractId || extractedContactId;
 
 const buySvg = (
   <svg
@@ -25,13 +24,13 @@ const Navbar = styled.div`
   display: flex;
   flex-direction: row;
   align-items: center;
-  background: ${isDarkModeOn ? "#282a3a" : "#f6f5f4"};
+  background: #f6f5f4;
   height: 50px;
   width: 100%;
   .buy {
     background: none;
     border: 1px solid #5b5d6b;
-    color: ${isDarkModeOn ? "#ffffff" : "#000000"};
+    color: #000000;
     outline: none;
     margin-top: 30px;
     padding: 5px 20px;
@@ -55,7 +54,7 @@ const Navbar = styled.div`
   .button {
     background: none;
     border: 1px solid #5b5d6b;
-    color: ${isDarkModeOn ? "#ffffff" : "#000000"};
+    color: #000000;
     outline: none;
     padding: 5px 20px;
     border-radius: 5px;
@@ -220,7 +219,8 @@ const fetchNFTData = (contractId) => {
   return response.body.data.mb_views_active_listings;
 };
 const nftData = fetchNFTData(contractId);
-const { listingCount, infoNFT, nftCount, dataTransaction } = fetchStoreFrontData(metadataId);
+const { listingCount, infoNFT, nftCount, dataTransaction } =
+  fetchStoreFrontData(metadataId);
 
 const isMintedContract = ["mintbase1.near", "mintspace2.testnet"].some(
   (substring) => contractId?.includes(substring)

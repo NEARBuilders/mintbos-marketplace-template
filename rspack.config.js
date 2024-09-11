@@ -35,7 +35,7 @@ module.exports = function (env) {
             options: {
               jsc: {
                 parser: {
-                  syntax: 'ecmascript',
+                  syntax: "ecmascript",
                   jsx: true,
                 },
                 externalHelpers: true,
@@ -44,7 +44,7 @@ module.exports = function (env) {
                 targets: "Chrome >= 48",
               },
             },
-            type: 'javascript/auto',
+            type: "javascript/auto",
           },
           // Images: Copy image files to build folder
           { test: /\.(?:ico|gif|png|jpg|jpeg)$/i, type: "asset/resource" },

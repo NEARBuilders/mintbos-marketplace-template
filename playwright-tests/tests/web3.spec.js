@@ -16,7 +16,7 @@ test("should be possible to interact with web3 widgets", async ({ page }) => {
     'near-social-viewer[src="meta-pool-official.near/widget/MetaPoolStakeEth"]'
   );
 
-  const header = page.getByRole('heading', { name: 'Stake ETH' });
+  const header = page.getByRole("heading", { name: "Stake ETH" });
   await expect(header).toBeVisible();
 
   const Web3ConnectButton = page.getByRole("button", {
