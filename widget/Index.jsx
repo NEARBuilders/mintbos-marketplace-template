@@ -14,6 +14,12 @@ const { href } = VM.require("${alias_DEVS}/widget/lib.url") || {
   href: () => "/",
 };
 
+const { getCartItemCount } = VM.require(
+  "${config_account}/widget/lib.cart"
+) || {
+  getCartItemCount: () => {},
+};
+
 const routerConfig = {
   param: "page",
   routes: {
@@ -66,6 +72,7 @@ const CSS = styled.div`
 
   .button {
     width: 100%;
+    padding: 5px;
   }
 
   .footer {
@@ -160,7 +167,10 @@ const Footer = () => (
         <a href="https://nearbuilders.com/tg-builders" target="_blank">
           <i className="bi bi-telegram"></i>
         </a>
-        <a href="https://github.com/NEARBuilders/blackdragon-marketplace-bos" target="_blank">
+        <a
+          href="https://github.com/NEARBuilders/blackdragon-marketplace-bos"
+          target="_blank"
+        >
           <i className="bi bi-github"></i>
         </a>
         <a href="https://${config_account}.social/" target="_blank">
@@ -177,10 +187,27 @@ const Footer = () => (
   </div>
 );
 
+const CartCount = styled.span`
+  background: #000;
+  color: #fff;
+  padding: ${numCartItems > 0 ? "8px 8px 8px 16px" : "8px 16px"};
+  border-radius: 100%;
+  font-size: 12px;
+  margin-left: 5px;
+  font-weight: bold;
+  display: inline-block;
+  text-align: center;
+  line-height: 20px;
+`;
+
+const numCartItems = getCartItemCount();
+
 const Sidebar = () => (
   <div className="sidebar">
-    <NavLink to={"home"}>home</NavLink>
-    <NavLink to={"cart"}>cart</NavLink>
+    <NavLink to={"home"}>Home</NavLink>
+    <NavLink to={"cart"}>
+      Cart {numCartItems > 0 && <CartCount>{numCartItems}</CartCount>}
+    </NavLink>
   </div>
 );
 

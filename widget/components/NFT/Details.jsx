@@ -1,7 +1,7 @@
 const { isDarkModeOn, data, NftCount, listingCount } = props;
 const { buyToken } = VM.require(
   "${alias_GENADROP}/widget/Mintbase.NFT.modules"
-);
+) || { buyToken: () => {} };
 
 const { buyTokenAsADao } = VM.require(
   "${alias_GENADROP}/widget/Mintbase.utils.sdk"
@@ -13,8 +13,8 @@ const { href } = VM.require("buildhub.near/widget/lib.url") || {
 
 const nearIcon = (
   <svg
-    width="25px"
-    height="25px"
+    width="50px"
+    height="50px"
     viewBox="0 0 18 18"
     fill="currentColor"
     xmlns="http://www.w3.org/2000/svg"
