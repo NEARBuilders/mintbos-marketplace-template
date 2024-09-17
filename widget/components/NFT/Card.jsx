@@ -85,12 +85,51 @@ const Card = ({ data }) => {
     "usdc.fakes.testnet": usdcIcon,
     "usdt.fakes.testnet": usdtIcon,
   };
+
+  const Root = styled.div`  
+   display: flex;
+    flex-direction: column;
+    height: 100%;
+    border-radius: 10px;
+    position: relative;
+    z-index: 2;
+    overflow: hidden;
+    background-color: rgb(32, 32, 32);
+    box-shadow: rgba(0, 0, 0, 0.08) 0px 4px 16px;
+    transition: background-color 0.25s ease-in-out;
+    .btns{
+      left: 0px;
+    width: 100%;
+    position: absolute;
+    bottom: -50px;
+    visibility: hidden;
+    transition: bottom 75ms ease-in-out, visibility 75ms;
+    display: flex;
+    justify-content: space-between;
+    button{
+      padding: 5px;
+      font-size: 16px;
+      cursor: pointer;
+      border: none;
+      outline: none;
+      margin: 0px;
+      color: black;
+    }
+  }
+    &:hover{
+      background-color: rgb(40, 40, 40);
+      .btns{
+        visibility: visible;
+        bottom: 0px;
+      }
+    }
+    `;
   const priceInNear = YoctoToNear(data.price);
   data.price = priceInNear;
   const existsInCart = itemExistsInCart(data);
   const size = "100%";
   return (
-    <div className="d-flex flex-column gap-1 w-15 p-3">
+    <Root className="d-flex flex-column gap-1 w-15 p-3">
       <Link
         to={href({
           widgetSrc: "${config_account}/widget/Index",
@@ -124,35 +163,41 @@ const Card = ({ data }) => {
           }}
         />
       </Link>
-      <button
-        onClick={() => {
-          if (existsInCart) {
-            removeItemsFromCart([data]);
-          } else {
-            // item.ft = "NEAR";
-            addItemsToCart([data]);
-          }
-        }}
-        style={{
-          border: "1px solid black",
-          backgroundColor: "white",
-          color: "black",
-          fontSize: "18px",
-          cursor: "pointer",
-        }}
-      >
-        {existsInCart
-          ? "Remove from cart"
-          : `Add to cart ${
-              data.price
-                ? data.currency === "near"
-                  ? priceInNear
-                  : (data?.price / 1000000).toFixed(2)
-                : "-"
-            }`}
-        {!existsInCart && listingType[data?.currency]}
-      </button>
-    </div>
+      <div className="btns">
+        {props.page==="home"&&<button className="w-75">
+          Buy Now
+        </button>}
+        <button
+          onClick={() => {
+            if (existsInCart) {
+              removeItemsFromCart([data]);
+            } else {
+              // item.ft = "NEAR";
+              addItemsToCart([data]);
+            }
+          }}
+          style={{
+            backgroundColor: "white",
+            color: "black",
+            fontSize: "18px",
+            cursor: "pointer",
+          }}
+          className={props.page==="home"? "w-25":  "w-100"} 
+        >
+          {/* {existsInCart
+            ? "Remove from cart"
+            : `Add to cart ${
+                data.price
+                  ? data.currency === "near"
+                    ? priceInNear
+                    : (data?.price / 1000000).toFixed(2)
+                  : "-"
+              }`} */}
+          {existsInCart ? <i className="bi bi-cart-x"></i>: <i className="bi bi-cart"></i>}  
+          {/* {!existsInCart && listingType[data?.currency]} */}
+        </button>
+      </div>
+    </Root>
   );
 };
 

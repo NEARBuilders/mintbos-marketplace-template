@@ -75,6 +75,7 @@ return (
                     props={{
                       data,
                       key: index,
+                      page: "home"
                     }}
                   />
                 ))}
