@@ -11,6 +11,9 @@ const {
   getCartItemCount: () => {},
   getCartTotal: () => {},
 };
+const { buyTokens } = VM.require(
+  "${alias_GENADROP}/widget/Mintbase.NFT.modules"
+) || { buyTokens: () => {} };
 
 const Root = styled.div`
   display: flex;
@@ -23,7 +26,7 @@ const Root = styled.div`
 const Cards = styled.div`
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-  grid-gap: 24px;
+  gap: 12px;
   border-radius: 0.7em;
   width: 100%;
   justify-content: center;
@@ -112,10 +115,8 @@ const usdcIcon = (
 
 const listingType = {
   near: nearIcon,
-  "ft::a0b86991c6218b36c1d19d4a2e9eb0ce3606eb48.factory.bridge.near":
-    usdcIcon,
-  "ft::dac17f958d2ee523a2206206994597c13d831ec7.factory.bridge.near":
-    usdtIcon,
+  "ft::a0b86991c6218b36c1d19d4a2e9eb0ce3606eb48.factory.bridge.near": usdcIcon,
+  "ft::dac17f958d2ee523a2206206994597c13d831ec7.factory.bridge.near": usdtIcon,
   "usdc.fakes.testnet": usdcIcon,
   "usdt.fakes.testnet": usdtIcon,
 };
@@ -123,44 +124,91 @@ const listingType = {
 const cart = getCart();
 const count = getCartItemCount();
 const total = getCartTotal();
+
+const CartRoot = styled.div`
+  h4 {
+    margin-top: 20px;
+  }
+  hr {
+    margin: 20px 0;
+  }
+  .cart-data {
+    display: flex;
+    justify-content: space-between;
+    font-weight: 600;
+    align-items: center;
+  }
+`;
+ 
+ const newData = Object.values(cart).map((data) => {
+   const firstListing = data?.listings[0];
+   return {
+     contractId: data?.nft_contract_id,
+     tokenId: data?.token_id,
+     price: data?.listings[0]?.price,
+     mainnet: context?.networkId === "mainnet",
+     ftAddress: firstListing?.currency,
+   };
+ });
+
+const handleBuy = () => {
+  const data = newData;
+
+  if (!context.accountId) return;
+  buyTokens(data);
+};
 return (
-  <div>
-    <h1>Cart {count ? count : "Empty"}</h1>
-    <Root>
-      <div className="w-100">
-        <Cards>
-          {cart &&
-            Object.values(cart).map((data, index) => (
-              <Widget
-                src={`${config_account}/widget/components.NFT.Card`}
-                props={{
-                  data,
-                  key: index,
-                }}
-              />
-            ))}
-        </Cards>
+  <CartRoot>
+    <h4>Your Cart </h4>
+    <hr />
+    <>
+      <div className="cart-data">
+        <div className="items-count">
+          {count} item{count > 1 ? "s" : ""}
+        </div>
         {count ? (
           <button
             onClick={() => {
               removeItemsFromCart(Object.values(cart));
             }}
+            className="button"
           >
-            Clear Cart
+            Clear all
           </button>
         ) : (
           ""
         )}
       </div>
+      <Root>
+        <div className="w-100">
+          <Cards>
+            {cart &&
+              Object.values(cart).map((data, index) => (
+                <Widget
+                  src={`${config_account}/widget/components.NFT.Card`}
+                  props={{
+                    data,
+                    key: index,
+                  }}
+                />
+              ))}
+          </Cards>
+        </div>
+      </Root>
+    </>
+    <div className="cart-data">
       {count ? (
         <div className="rhs">
-          <h2 className="d-flex">
-            Total: {total} {totalNearIcon}
-          </h2>
+          <h4 className="d-flex">
+            Total price: {total.toFixed(2)} {totalNearIcon}
+          </h4>
         </div>
       ) : (
         ""
       )}
-    </Root>
-  </div>
+      <button className="button" onClick={handleBuy}>
+        Complete Purchase
+      </button>
+    </div>
+  </CartRoot>
 );

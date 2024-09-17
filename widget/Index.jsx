@@ -55,22 +55,23 @@ const CSS = styled.div`
 
   .header {
     border: "solid";
-    padding: 20px;
+    padding: 20px 0px;
 
     display: flex;
     flex-direction: column;
-    .nav{
+    .nav {
       display: flex;
       justify-content: space-between;
       align-items: center;
       padding: 10px 0;
-      .right-nav, .logo-area{
+      .right-nav,
+      .logo-area {
         display: flex;
         align-items: center;
         gap: 10px;
       }
     }
-    .hero{
+    .hero {
       display: flex;
       /* justify-content: center; */
       /* align-items: center; */
@@ -88,10 +89,12 @@ const CSS = styled.div`
   }
 
   .button {
-    width: 100%;
-    padding: 5px;
-    border: none;
-  background: transparent;
+    background-color: #fff;
+    color: #312f32;
+    border: 1px solid #ed8a71;
+    padding: 5px 10px;
+    border-radius: 5px;
+    cursor: pointer;
   }
 
   .footer {
@@ -144,94 +147,100 @@ const NavLink = ({ to, children, passProps }) => (
   </Link>
 );
 
-
 const CartCount = styled.span`
-      background: #000;
-      color: #fff;
-      border-radius: 50%;
-      font-size: 10px;
-      font-weight: bold;
-      display: inline-block;
-      text-align: center;
-      line-height: 20px;
-      height: 18px;
-      width: 18px;
-      position: absolute;
-      top: 1px;
-        right: -2px;
-      .numwrap{
-        position: relative;
-        top: -2px;
-      }
-    `;
-    
-    const numCartItems = getCartItemCount();
-    
-    const NavItem = styled.div`
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      /* font-weight: 700; */
-      i {
-        margin-right: 5px;
-      }
-      a {
-        color: inherit;
-        text-decoration: none;
-      }
-      .cnt{
-        position: relative;
-        font-size: 30px;
-      }
-      .button{
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        background: none;
-        border: 1px solid #c3c3c3;
-        color: #000000;
-        outline: none;
-        /* padding: 5px 20px; */
-        padding: 0px 12px;
-        border-radius: 5px;
-        font-size: 18px;
-        font-weight: bold;
-        cursor: pointer;
-        :hover{
-          background: #ecececda;}
-      }
-    `;
+  background: #000;
+  color: #fff;
+  border-radius: 50%;
+  font-size: 10px;
+  font-weight: bold;
+  display: inline-block;
+  text-align: center;
+  line-height: 20px;
+  height: 18px;
+  width: 18px;
+  position: absolute;
+  top: 1px;
+  right: -2px;
+  .numwrap {
+    position: relative;
+    top: -2px;
+  }
+`;
+
+const numCartItems = getCartItemCount();
+
+const NavItem = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  /* font-weight: 700; */
+  i {
+    margin-right: 5px;
+  }
+  a {
+    color: inherit;
+    text-decoration: none;
+  }
+  .cnt {
+    position: relative;
+    font-size: 30px;
+  }
+  .button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: none;
+    border: 1px solid #c3c3c3;
+    color: #000000;
+    outline: none;
+    /* padding: 5px 20px; */
+    padding: 0px 12px;
+    border-radius: 5px;
+    font-size: 18px;
+    font-weight: bold;
+    cursor: pointer;
+    :hover {
+      background: #ecececda;
+    }
+  }
+`;
 
 const Header = () => (
   <div className="header">
     <div className="nav">
-      
       <div className="logo-area">
         {/* <NavLink to={"home"}><img src="#" alt="bd-logo"/></NavLink> */}
         <NavItem>
-        <NavLink to={"home"}>Home</NavLink>
-            </NavItem>
+          <NavLink to={"home"}>Home</NavLink>
+        </NavItem>
       </div>
       <div className="right-nav">
         <NavItem>
           <NavLink
             to="inspect"
             passProps={{
-              widgetPath: routerConfig.routes[props.page].path ?? "${config_index}",
+              widgetPath:
+                routerConfig.routes[props.page].path ?? "${config_index}",
             }}
           >
             <i className="bi bi-code"></i>
             <span>View source</span>
           </NavLink>
         </NavItem>
-            <NavItem>
-        <NavLink to={"cart"}>
-        <div className="cnt"><i className="bi bi-cart"></i> {numCartItems > 0 && <CartCount><div className="numwrap">{numCartItems}</div></CartCount>}</div>
+        <NavItem>
+          <NavLink to={"cart"}>
+            <div className="cnt">
+              <i className="bi bi-cart"></i>{" "}
+              {numCartItems > 0 && (
+                <CartCount>
+                  <div className="numwrap">{numCartItems}</div>
+                </CartCount>
+              )}
+            </div>
           </NavLink>
-            </NavItem>
+        </NavItem>
       </div>
     </div>
-
   </div>
 );
 
@@ -280,7 +289,6 @@ const Footer = () => (
   </div>
 );
 
-
 const Sidebar = () => (
   <div className="sidebar">
     <NavItem>
@@ -288,7 +296,14 @@ const Sidebar = () => (
     </NavItem>
     <NavItem>
       <NavLink to={"cart"}>
-      <div className="cnt"><i className="bi bi-cart"></i> {numCartItems > 0 && <CartCount><div className="numwrap">{numCartItems}</div></CartCount>}</div>
+        <div className="cnt">
+          <i className="bi bi-cart"></i>{" "}
+          {numCartItems > 0 && (
+            <CartCount>
+              <div className="numwrap">{numCartItems}</div>
+            </CartCount>
+          )}
+        </div>
       </NavLink>
     </NavItem>
   </div>

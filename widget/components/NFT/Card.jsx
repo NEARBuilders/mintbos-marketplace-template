@@ -1,4 +1,3 @@
-
 const Card = ({ data }) => {
   const { href } = VM.require("buildhub.near/widget/lib.url") || {
     href: () => {},
@@ -10,11 +9,11 @@ const Card = ({ data }) => {
     removeItemsFromCart: () => {},
     itemExistsInCart: () => false,
   };
-  
+
   const { buyTokens } = VM.require(
     "${alias_GENADROP}/widget/Mintbase.NFT.modules"
   ) || { buyTokens: () => {} };
-  
+
   const YoctoToNear = (amountYocto) => {
     return new Big(amountYocto || 0).div(new Big(10).pow(24)).toString();
   };
@@ -102,6 +101,7 @@ const Card = ({ data }) => {
     box-shadow: rgba(0, 0, 0, 0.08) 0px 4px 16px;
     transition: background-color 0.25s ease-in-out;
     border: 4px solid #ed8a71;
+    max-width: 300px;
     .title,
     .price {
       font-size: 16px;
@@ -139,10 +139,10 @@ const Card = ({ data }) => {
         background-color: #fff;
         font-weight: 700;
         color: #312f32;
-          :hover,
-          :focus {
-            background-color: #f4e5e1;
-          }
+        :hover,
+        :focus {
+          background-color: #f4e5e1;
+        }
         :last-child {
           border-left: 1px solid #ed8a71;
         }
@@ -172,25 +172,25 @@ const Card = ({ data }) => {
   `;
 
   const firstListing = data?.listings[0];
-  
+
   const handleBuy = () => {
-   console.log("Buying", data);
-   
-   if (!context.accountId) return;
-   buyTokens({
-     contractId: data?.nft_contract_id,
-     tokenId: data?.token_id,
-     price: data?.listings[0]?.price,
-     mainnet: context?.networkId === "mainnet",
-     ftAddress: firstListing?.currency,
-   });
- };
+    console.log("Buying", data);
+
+    if (!context.accountId) return;
+    buyTokens({
+      contractId: data?.nft_contract_id,
+      tokenId: data?.token_id,
+      price: data?.listings[0]?.price,
+      mainnet: context?.networkId === "mainnet",
+      ftAddress: firstListing?.currency,
+    });
+  };
   const isHome = props.page === "home" ? true : false;
   const priceInNear = YoctoToNear(data.price);
-  data.price = isHome? priceInNear: data.price;
+  data.price = isHome ? priceInNear : data.price;
   const existsInCart = itemExistsInCart(data);
   const size = "100%";
-  
+
   return (
     <Root className="d-flex flex-column gap-1 w-15">
       <Link
@@ -258,13 +258,11 @@ const Card = ({ data }) => {
         </div>
       </Link>
       <div className="btns">
-        {isHome &&
-          context?.accountId !== data?.owner &&
-          context?.accountId && (
-            <button className="w-75" onClick={handleBuy}>
-              Buy Now
-            </button>
-          )}
+        {isHome && context?.accountId !== data?.owner && context?.accountId && (
+          <button className="w-75" onClick={handleBuy}>
+            Buy Now
+          </button>
+        )}
         <button
           onClick={() => {
             if (existsInCart) {
