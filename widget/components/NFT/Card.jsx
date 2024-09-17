@@ -136,19 +136,24 @@ const Card = ({ data }) => {
         border: none;
         outline: none;
         margin: 0px;
-        background-color: #ed8a71;
+        background-color: #fff;
         font-weight: 700;
-        color: black;
-        :hover {
-          filter: brightness(1.3);
+        color: #312f32;
+          :hover,
+          :focus {
+            background-color: #f4e5e1;
+          }
+        :last-child {
+          border-left: 1px solid #ed8a71;
         }
       }
     }
-    .img-container{
+    .img-container {
       width: 100%;
       height: 300px;
       overflow: hidden;
-    } &:hover {
+    }
+    &:hover {
       background-color: rgb(40, 40, 40);
       .btns {
         visibility: visible;
@@ -185,7 +190,6 @@ const Card = ({ data }) => {
   data.price = isHome? priceInNear: data.price;
   const existsInCart = itemExistsInCart(data);
   const size = "100%";
-  console.log("price", data.price);
   
   return (
     <Root className="d-flex flex-column gap-1 w-15">
