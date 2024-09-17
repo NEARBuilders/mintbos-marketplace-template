@@ -65,11 +65,14 @@ return (
       <h5>Loading...</h5>
     ) : (
       <>
+        <div className="hero">
+          <h1>Black Dragon Marketplace</h1>
+        </div>
         {countNFTs > 0 ? (
           <>
             <Cards>
               {nftData &&
-                  nftData.map((data, index) => {
+                nftData.map((data, index) => {
                   /* will porpbably have to move this to mintbos sdk*/
                   const fetchNFTInfo = (nftId) => {
                     const response = fetch(

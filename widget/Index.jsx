@@ -231,9 +231,6 @@ const Header = () => (
             </NavItem>
       </div>
     </div>
-    <div className="hero">
-    <h1>Black Dragon Marketplace</h1>
-    </div>
 
   </div>
 );
