@@ -46,7 +46,6 @@ const routerConfig = {
 
 const CSS = styled.div`
   width: 100%;
-  height: 100vh;
   display: flex;
   justify-content: space-between;
 
@@ -64,7 +63,7 @@ const CSS = styled.div`
       display: flex;
       justify-content: space-between;
       align-items: center;
-      padding: 10px;
+      padding: 10px 0;
       .right-nav, .logo-area{
         display: flex;
         align-items: center;
