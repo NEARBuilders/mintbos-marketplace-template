@@ -1,19 +1,23 @@
-const { href } = VM.require("buildhub.near/widget/lib.url") || {
-  href: () => {},
-};
-const { addItemsToCart, removeItemsFromCart, itemExistsInCart } = VM.require(
-  "${config_account}/widget/lib.cart"
-) || {
-  addItemsToCart: () => {},
-  removeItemsFromCart: () => {},
-  itemExistsInCart: () => false,
-};
-
-const YoctoToNear = (amountYocto) => {
-  return new Big(amountYocto || 0).div(new Big(10).pow(24)).toString();
-};
 
 const Card = ({ data }) => {
+  const { href } = VM.require("buildhub.near/widget/lib.url") || {
+    href: () => {},
+  };
+  const { addItemsToCart, removeItemsFromCart, itemExistsInCart } = VM.require(
+    "${config_account}/widget/lib.cart"
+  ) || {
+    addItemsToCart: () => {},
+    removeItemsFromCart: () => {},
+    itemExistsInCart: () => false,
+  };
+  
+  const { buyTokens } = VM.require(
+    "${alias_GENADROP}/widget/Mintbase.NFT.modules"
+  ) || { buyTokens: () => {} };
+  
+  const YoctoToNear = (amountYocto) => {
+    return new Big(amountYocto || 0).div(new Big(10).pow(24)).toString();
+  };
   if (!data) {
     return "Loading";
   }
@@ -110,6 +114,9 @@ const Card = ({ data }) => {
       display: flex;
       align-items: center;
     }
+    img {
+      transition: transform 0.4s ease-in-out;
+    }
 
     .btns {
       left: 0px;
@@ -137,21 +144,48 @@ const Card = ({ data }) => {
         }
       }
     }
-    &:hover {
+    .img-container{
+      width: 100%;
+      height: 300px;
+      overflow: hidden;
+    } &:hover {
       background-color: rgb(40, 40, 40);
       .btns {
         visibility: visible;
         bottom: 0px;
       }
+      img {
+        transform: scale(1.05);
+      }
+    }
+    .add {
+      color: green;
+    }
+    .remove {
+      color: red;
     }
   `;
 
+  const firstListing = data?.listings[0];
+  
+  const handleBuy = () => {
+   console.log("Buying", data);
+   
+   if (!context.accountId) return;
+   buyTokens({
+     contractId: data?.nft_contract_id,
+     tokenId: data?.token_id,
+     price: data?.listings[0]?.price,
+     mainnet: context?.networkId === "mainnet",
+     ftAddress: firstListing?.currency,
+   });
+ };
   const isHome = props.page === "home" ? true : false;
   const priceInNear = YoctoToNear(data.price);
   data.price = isHome? priceInNear: data.price;
   const existsInCart = itemExistsInCart(data);
   const size = "100%";
-  console.log("price",data.price);
+  console.log("price", data.price);
   
   return (
     <Root className="d-flex flex-column gap-1 w-15">
@@ -165,60 +199,68 @@ const Card = ({ data }) => {
           },
         })}
       >
-        <Widget
-          src="${alias_MOB}/widget/NftImage"
-          props={{
-            nft: {
-              tokenId: data?.token_id,
-              contractId: data?.nft_contract_id,
-            },
-            style: {
-              width: size,
-              height: "300px",
-              objectFit: "cover",
-              minWidth: size,
-              minHeight: size,
-              maxWidth: size,
-              maxHeight: size,
-              overflowWrap: "break-word",
-            },
-            className: "",
-            fallbackUrl:
-              "https://ipfs.near.social/ipfs/bafkreihdiy3ec4epkkx7wc4wevssruen6b7f3oep5ylicnpnyyqzayvcry",
-          }}
-        />
-      </Link>
-      <div className="price-area p-3">
-        <h5 className="title">
-          {data.title
-            ? data?.title.length > 20
-              ? `${data?.title.slice(0, 21)}...`
-              : data?.title
-            : "Untitled"}
-        </h5>
+        <div className="img-container">
+          <Widget
+            src="${alias_MOB}/widget/NftImage"
+            props={{
+              nft: {
+                tokenId: data?.token_id,
+                contractId: data?.nft_contract_id,
+              },
+              style: {
+                width: size,
+                height: "300px",
+                objectFit: "cover",
+                minWidth: size,
+                minHeight: size,
+                maxWidth: size,
+                maxHeight: size,
+                overflowWrap: "break-word",
+              },
+              className: "",
+              fallbackUrl:
+                "https://ipfs.near.social/ipfs/bafkreihdiy3ec4epkkx7wc4wevssruen6b7f3oep5ylicnpnyyqzayvcry",
+            }}
+          />
+        </div>
+        <div className="price-area p-3">
+          <h5 className="title">
+            {data.title
+              ? data?.title.length > 20
+                ? `${data?.title.slice(0, 21)}...`
+                : data?.title
+              : "Untitled"}
+          </h5>
 
-        {isHome ? (
-          <p className="price">
-            {data.price
-              ? data.currency === "near"
-                ? priceInNear
-                : (data?.price / 1000000).toFixed(2)
-              : "-"}
-            {listingType[data?.currency] && (
-              <span className="ml-2">{listingType[data?.currency]}</span>
-            )}
-          </p>
-        ) : (
-          <p className="price">
-            {data ? data.price : "-"}
-            {listingType[data?.currency] && (
-              <span className="ml-2">{listingType[data?.currency]}</span>
-            )}
-          </p>
-        )}
-      </div>
+          {isHome ? (
+            <p className="price">
+              {data.price
+                ? data.currency === "near"
+                  ? priceInNear
+                  : (data?.price / 1000000).toFixed(2)
+                : "-"}
+              {listingType[data?.currency] && (
+                <span className="ml-2">{listingType[data?.currency]}</span>
+              )}
+            </p>
+          ) : (
+            <p className="price">
+              {data ? data.price : "-"}
+              {listingType[data?.currency] && (
+                <span className="ml-2">{listingType[data?.currency]}</span>
+              )}
+            </p>
+          )}
+        </div>
+      </Link>
       <div className="btns">
-        {isHome && <button className="w-75">Buy Now</button>}
+        {isHome &&
+          context?.accountId !== data?.owner &&
+          context?.accountId && (
+            <button className="w-75" onClick={handleBuy}>
+              Buy Now
+            </button>
+          )}
         <button
           onClick={() => {
             if (existsInCart) {
@@ -231,15 +273,15 @@ const Card = ({ data }) => {
           style={{
             backgroundColor: "white",
             color: "black",
-            fontSize: "18px",
+            fontSize: "20px",
             cursor: "pointer",
           }}
           className={isHome ? "w-25" : "w-100"}
         >
           {existsInCart ? (
-            <i className="bi bi-cart-x"></i>
+            <i className="bi bi-cart-dash remove" title="remove from cart"></i>
           ) : (
-            <i className="bi bi-cart"></i>
+            <i className="bi bi-cart-plus add" title="add to cart"></i>
           )}
         </button>
       </div>
