@@ -191,6 +191,27 @@ const Card = ({ data }) => {
   const existsInCart = itemExistsInCart(data);
   const size = "100%";
 
+  const buyButton = context.accountId ? (
+    <button className="w-75" onClick={handleBuy}>
+      Buy Now
+    </button>
+  ) : (
+    <Wallet
+      provides={({ signIn, signOut }) => {
+        return (
+          <button
+            onClick={signIn}
+            id="open-walletselector-button"
+            type="button"
+            className="w-75"
+          >
+            Buy Now
+          </button>
+        );
+      }}
+    />
+  );
+
   return (
     <Root className="d-flex flex-column gap-1 w-15">
       <Link
@@ -258,11 +279,7 @@ const Card = ({ data }) => {
         </div>
       </Link>
       <div className="btns">
-        {isHome && context?.accountId !== data?.owner && context?.accountId && (
-          <button className="w-75" onClick={handleBuy}>
-            Buy Now
-          </button>
-        )}
+        {isHome && context?.accountId !== data?.owner && buyButton}
         <button
           onClick={() => {
             if (existsInCart) {

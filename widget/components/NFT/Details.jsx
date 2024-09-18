@@ -418,18 +418,37 @@ const firstListing = data?.listings[0];
 
 const handleBuy = () => {
   if (!context.accountId) return;
-  buyTokens(
-    {
-      contractId: data?.nft_contract_id,
-      tokenId: data?.token_id,
-      price: data?.listings[0]?.price,
-      mainnet: context?.networkId === "mainnet",
-      ftAddress: firstListing?.currency,
-    }
-  );
+  buyTokens({
+    contractId: data?.nft_contract_id,
+    tokenId: data?.token_id,
+    price: data?.listings[0]?.price,
+    mainnet: context?.networkId === "mainnet",
+    ftAddress: firstListing?.currency,
+  });
 };
 
 const existsInCart = itemExistsInCart(data);
+
+const buyButton = context.accountId ? (
+  <button onClick={handleBuy} className="btn-cus">
+    Buy With Crypto
+  </button>
+) : (
+  <Wallet
+    provides={({ signIn, signOut }) => {
+      return (
+        <button
+          onClick={signIn}
+          id="open-walletselector-button"
+          type="button"
+          className="btn-cus"
+        >
+          Buy With Crypto
+        </button>
+      );
+    }}
+  />
+);
 
 return !data ? (
   <div>Please enter nft data to view it's details</div>
@@ -770,11 +789,7 @@ return !data ? (
             <div className="right-footer">
               {firstListing?.price &&
                 context?.accountId !== data?.owner &&
-                context?.accountId && (
-                  <button onClick={handleBuy} className="btn-cus">
-                    Buy With Crypto
-                  </button>
-                )}
+                buyButton}
               <button
                 onClick={() => {
                   if (existsInCart) {

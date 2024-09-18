@@ -205,6 +205,23 @@ const NavItem = styled.div`
   }
 `;
 
+const ProfileIcon = () => {
+  const Wrapper = styled.svg`
+    padding: 0.25rem;
+    @media screen and (max-width: 768px) {
+      display: none;
+    }
+  `;
+  return (
+    <Widget
+      src={`${config_account}/widget/components.Profile`}
+      props={{
+        accountId: context.accountId,
+      }}
+    />
+  );
+};
+
 const Header = () => (
   <div className="header">
     <div className="nav">
@@ -238,6 +255,28 @@ const Header = () => (
               )}
             </div>
           </NavLink>
+        </NavItem>
+        <NavItem>
+          {context.accountId ? (
+            <ProfileIcon />
+          ) : (
+            <div style={{ width: 100 }} class="login-container">
+              <Wallet
+                provides={({ signIn, signOut }) => {
+                  return (
+                    <button
+                      onClick={signIn}
+                      id="open-walletselector-button"
+                      type="button"
+                      class="login-button button"
+                    >
+                      Login
+                    </button>
+                  );
+                }}
+              />
+            </div>
+          )}
         </NavItem>
       </div>
     </div>
