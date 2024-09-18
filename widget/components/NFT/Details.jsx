@@ -1,15 +1,25 @@
 const { isDarkModeOn, data, NftCount, listingCount } = props;
-const { buyToken } = VM.require(
+const { buyTokens } = VM.require(
   "${alias_GENADROP}/widget/Mintbase.NFT.modules"
-) || { buyToken: () => {} };
+) || { buyTokens: () => {} };
 
 const { buyTokenAsADao } = VM.require(
   "${alias_GENADROP}/widget/Mintbase.utils.sdk"
 ) || { buyTokenAsADao: () => {} };
 
+const { addItemsToCart, removeItemsFromCart, itemExistsInCart } = VM.require(
+  "${config_account}/widget/lib.cart"
+) || {
+  addItemsToCart: () => {},
+  removeItemsFromCart: () => {},
+  itemExistsInCart: () => false,
+};
+
 const { href } = VM.require("buildhub.near/widget/lib.url") || {
   href: () => {},
 };
+
+console.log(data);
 
 const nearIcon = (
   <svg
@@ -92,7 +102,7 @@ const Container = styled.div`
   }
   .view-nft {
     padding: 30px;
-    background: ${isDarkModeOn ? "rgb(30, 32, 48)" : "#f6f5f4"};
+    background: #f6f5f4;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -354,6 +364,27 @@ const Container = styled.div`
       min-width: 100%;
     }
   }
+  button {
+    padding: 2px;
+    font-size: 16px;
+    cursor: pointer;
+    border: 1px solid #ed8a71;
+    outline: none;
+    margin: 0px;
+    background-color: #ed8a71;
+    font-weight: 700;
+    color: black;
+    border-radius: 5px;
+    :hover {
+      filter: brightness(1.3);
+    }
+  }
+  .add {
+    color: green;
+  }
+  .remove {
+    color: red;
+  }
 `;
 
 const [dropdowVisible, setDropDownVisible] = useState(true);
@@ -387,14 +418,18 @@ const firstListing = data?.listings[0];
 
 const handleBuy = () => {
   if (!context.accountId) return;
-  buyToken(
-    data?.nft_contract_id,
-    data?.token_id,
-    data?.listings[0]?.price,
-    context?.networkId === "mainnet",
-    firstListing?.currency
+  buyTokens(
+    {
+      contractId: data?.nft_contract_id,
+      tokenId: data?.token_id,
+      price: data?.listings[0]?.price,
+      mainnet: context?.networkId === "mainnet",
+      ftAddress: firstListing?.currency,
+    }
   );
 };
+
+const existsInCart = itemExistsInCart(data);
 
 return !data ? (
   <div>Please enter nft data to view it's details</div>
@@ -740,6 +775,32 @@ return !data ? (
                     Buy With Crypto
                   </button>
                 )}
+              <button
+                onClick={() => {
+                  if (existsInCart) {
+                    removeItemsFromCart([data]);
+                  } else {
+                    // item.ft = "NEAR";
+                    addItemsToCart([data]);
+                  }
+                }}
+                style={{
+                  backgroundColor: "white",
+                  color: "black",
+                  fontSize: "20px",
+                  cursor: "pointer",
+                }}
+                className={isHome ? "w-25" : "w-100"}
+              >
+                {existsInCart ? (
+                  <i
+                    className="bi bi-cart-dash remove"
+                    title="remove from cart"
+                  ></i>
+                ) : (
+                  <i className="bi bi-cart-plus add" title="add to cart"></i>
+                )}
+              </button>
             </div>
           </div>
         ) : (

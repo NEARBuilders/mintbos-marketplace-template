@@ -1,43 +1,46 @@
-const { href } = VM.require("buildhub.near/widget/lib.url") || {
-  href: () => {},
-};
-const { addItemsToCart, removeItemsFromCart, itemExistsInCart } = VM.require(
-  "${config_account}/widget/lib.cart"
-) || {
-  addItemsToCart: () => {},
-  removeItemsFromCart: () => {},
-  itemExistsInCart: () => false,
-};
-
-const YoctoToNear = (amountYocto) => {
-  return new Big(amountYocto || 0).div(new Big(10).pow(24)).toString();
-};
-
 const Card = ({ data }) => {
+  const { href } = VM.require("buildhub.near/widget/lib.url") || {
+    href: () => {},
+  };
+  const { addItemsToCart, removeItemsFromCart, itemExistsInCart } = VM.require(
+    "${config_account}/widget/lib.cart"
+  ) || {
+    addItemsToCart: () => {},
+    removeItemsFromCart: () => {},
+    itemExistsInCart: () => false,
+  };
+
+  const { buyTokens } = VM.require(
+    "${alias_GENADROP}/widget/Mintbase.NFT.modules"
+  ) || { buyTokens: () => {} };
+
+  const YoctoToNear = (amountYocto) => {
+    return new Big(amountYocto || 0).div(new Big(10).pow(24)).toString();
+  };
   if (!data) {
     return "Loading";
   }
 
   const nearIcon = (
     <svg
-      width="18px"
-      height="18px"
+      width="25px"
+      height="25px"
       viewBox="0 0 18 18"
-      fill="currentColor"
+      fill="#fff"
       xmlns="http://www.w3.org/2000/svg"
-      class="fill-current text-black dark:text-white"
+      className="fill-current text-black dark:text-white"
     >
       <path
         d="M5.10976 4.05615C5.47596 4.05615 5.81596 4.24601 6.00779 4.55812L8.07455 7.62657C8.14188 7.7277 8.11455 7.86404 8.01343 7.93136C7.93145 7.98601 7.823 7.97925 7.74835 7.91502L5.71399 6.15052C5.68019 6.1201 5.62807 6.12319 5.59765 6.157C5.58385 6.17249 5.57652 6.19249 5.57652 6.21305V11.7376C5.57652 11.7832 5.61343 11.8198 5.65906 11.8198C5.68357 11.8198 5.70667 11.8091 5.72216 11.7902L11.8717 4.42911C12.072 4.19277 12.3661 4.05643 12.6757 4.05615H12.8906C13.4723 4.05615 13.9438 4.5277 13.9438 5.10939V12.8902C13.9438 13.4719 13.4723 13.9435 12.8906 13.9435C12.5244 13.9435 12.1844 13.7536 11.9926 13.4415L9.92582 10.3731C9.8585 10.2719 9.88582 10.1356 9.98695 10.0683C10.0689 10.0136 10.1774 10.0204 10.252 10.0846L12.2864 11.8491C12.3202 11.8795 12.3723 11.8764 12.4027 11.8426C12.4165 11.8271 12.4238 11.8071 12.4236 11.7866V6.26066C12.4236 6.21503 12.3867 6.17841 12.341 6.17841C12.3168 6.17841 12.2934 6.18911 12.2779 6.20798L6.1292 13.5705C5.92892 13.8069 5.63483 13.9432 5.32526 13.9435H5.11033C4.52864 13.9438 4.05681 13.4725 4.05624 12.8908V5.10939C4.05624 4.5277 4.52779 4.05615 5.10948 4.05615H5.10976Z"
-        fill="currentColor"
+        fill="#fff"
       ></path>
     </svg>
   );
 
   const usdtIcon = (
     <svg
-      width="18px"
-      height="18px"
+      width="25px"
+      height="25px"
       viewBox="0 0 24 24"
       fill="currentColor"
       xmlns="http://www.w3.org/2000/svg"
@@ -54,8 +57,8 @@ const Card = ({ data }) => {
 
   const usdcIcon = (
     <svg
-      width="18px"
-      height="18px"
+      width="25px"
+      height="25px"
       viewBox="0 0 18 18"
       fill="currentColor"
       xmlns="http://www.w3.org/2000/svg"
@@ -85,12 +88,111 @@ const Card = ({ data }) => {
     "usdc.fakes.testnet": usdcIcon,
     "usdt.fakes.testnet": usdtIcon,
   };
+
+  const Root = styled.div`
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    border-radius: 10px;
+    position: relative;
+    z-index: 2;
+    overflow: hidden;
+    background-color: #312f32;
+    box-shadow: rgba(0, 0, 0, 0.08) 0px 4px 16px;
+    transition: background-color 0.25s ease-in-out;
+    border: 4px solid #ed8a71;
+    max-width: 300px;
+    .title,
+    .price {
+      font-size: 16px;
+      color: white;
+    }
+    .title {
+      font-weight: 700;
+    }
+    .price {
+      display: flex;
+      align-items: center;
+    }
+    img {
+      transition: transform 0.4s ease-in-out;
+    }
+
+    .btns {
+      left: 0px;
+      width: 100%;
+      position: absolute;
+      bottom: -50px;
+      visibility: hidden;
+      transition:
+        bottom 75ms ease-in-out,
+        visibility 75ms;
+      display: flex;
+      justify-content: space-between;
+      button {
+        padding: 2px;
+        font-size: 16px;
+        cursor: pointer;
+        border: none;
+        outline: none;
+        margin: 0px;
+        background-color: #fff;
+        font-weight: 700;
+        color: #312f32;
+        :hover,
+        :focus {
+          background-color: #f4e5e1;
+        }
+        :last-child {
+          border-left: 1px solid #ed8a71;
+        }
+      }
+    }
+    .img-container {
+      width: 100%;
+      height: 300px;
+      overflow: hidden;
+    }
+    &:hover {
+      background-color: rgb(40, 40, 40);
+      .btns {
+        visibility: visible;
+        bottom: 0px;
+      }
+      img {
+        transform: scale(1.05);
+      }
+    }
+    .add {
+      color: green;
+    }
+    .remove {
+      color: red;
+    }
+  `;
+
+  const firstListing = data?.listings[0];
+
+  const handleBuy = () => {
+    console.log("Buying", data);
+
+    if (!context.accountId) return;
+    buyTokens({
+      contractId: data?.nft_contract_id,
+      tokenId: data?.token_id,
+      price: data?.listings[0]?.price,
+      mainnet: context?.networkId === "mainnet",
+      ftAddress: firstListing?.currency,
+    });
+  };
+  const isHome = props.page === "home" ? true : false;
   const priceInNear = YoctoToNear(data.price);
-  data.price = priceInNear;
+  data.price = isHome ? priceInNear : data.price;
   const existsInCart = itemExistsInCart(data);
   const size = "100%";
+
   return (
-    <div className="d-flex flex-column gap-1 w-15 p-3">
+    <Root className="d-flex flex-column gap-1 w-15">
       <Link
         to={href({
           widgetSrc: "${config_account}/widget/Index",
@@ -101,58 +203,91 @@ const Card = ({ data }) => {
           },
         })}
       >
-        <Widget
-          src="${alias_MOB}/widget/NftImage"
-          props={{
-            nft: {
-              tokenId: data?.token_id,
-              contractId: data?.nft_contract_id,
-            },
-            style: {
-              width: size,
-              height: "300px",
-              objectFit: "cover",
-              minWidth: size,
-              minHeight: size,
-              maxWidth: size,
-              maxHeight: size,
-              overflowWrap: "break-word",
-            },
-            className: "",
-            fallbackUrl:
-              "https://ipfs.near.social/ipfs/bafkreihdiy3ec4epkkx7wc4wevssruen6b7f3oep5ylicnpnyyqzayvcry",
-          }}
-        />
-      </Link>
-      <button
-        onClick={() => {
-          if (existsInCart) {
-            removeItemsFromCart([data]);
-          } else {
-            // item.ft = "NEAR";
-            addItemsToCart([data]);
-          }
-        }}
-        style={{
-          border: "1px solid black",
-          backgroundColor: "white",
-          color: "black",
-          fontSize: "18px",
-          cursor: "pointer",
-        }}
-      >
-        {existsInCart
-          ? "Remove from cart"
-          : `Add to cart ${
-              data.price
+        <div className="img-container">
+          <Widget
+            src="${alias_MOB}/widget/NftImage"
+            props={{
+              nft: {
+                tokenId: data?.token_id,
+                contractId: data?.nft_contract_id,
+              },
+              style: {
+                width: size,
+                height: "300px",
+                objectFit: "cover",
+                minWidth: size,
+                minHeight: size,
+                maxWidth: size,
+                maxHeight: size,
+                overflowWrap: "break-word",
+              },
+              className: "",
+              fallbackUrl:
+                "https://ipfs.near.social/ipfs/bafkreihdiy3ec4epkkx7wc4wevssruen6b7f3oep5ylicnpnyyqzayvcry",
+            }}
+          />
+        </div>
+        <div className="price-area p-3">
+          <h5 className="title">
+            {data.title
+              ? data?.title.length > 20
+                ? `${data?.title.slice(0, 21)}...`
+                : data?.title
+              : "Untitled"}
+          </h5>
+
+          {isHome ? (
+            <p className="price">
+              {data.price
                 ? data.currency === "near"
                   ? priceInNear
                   : (data?.price / 1000000).toFixed(2)
-                : "-"
-            }`}
-        {!existsInCart && listingType[data?.currency]}
-      </button>
-    </div>
+                : "-"}
+              {listingType[data?.currency] && (
+                <span className="ml-2">{listingType[data?.currency]}</span>
+              )}
+            </p>
+          ) : (
+            <p className="price">
+              {data ? data.price : "-"}
+              {listingType[data?.currency] && (
+                <span className="ml-2">{listingType[data?.currency]}</span>
+              )}
+            </p>
+          )}
+        </div>
+      </Link>
+      <div className="btns">
+        {isHome && context?.accountId !== data?.owner && context?.accountId && (
+          <button className="w-75" onClick={handleBuy}>
+            Buy Now
+          </button>
+        )}
+        <button
+          onClick={() => {
+            if (existsInCart) {
+              removeItemsFromCart([data]);
+            } else {
+              // item.ft = "NEAR";
+              addItemsToCart([data]);
+            }
+          }}
+          style={{
+            backgroundColor: "white",
+            color: "black",
+            fontSize: "20px",
+            cursor: "pointer",
+          }}
+          className={isHome ? "w-25" : "w-100"}
+        >
+          {existsInCart ? (
+            <i className="bi bi-cart-dash remove" title="remove from cart"></i>
+          ) : (
+            <i className="bi bi-cart-plus add" title="add to cart"></i>
+          )}
+        </button>
+      </div>
+    </Root>
   );
 };
 
