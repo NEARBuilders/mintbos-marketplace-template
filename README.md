@@ -293,11 +293,11 @@ Unlock Your NFT Storefront: Clone & Customize Your Path to Blockchain Success wi
 
 [![Use Case](https://img.shields.io/badge/Use%20Case-Marketplace-blue)](#)
 [![Tools](https://img.shields.io/badge/Tools-@mintbase.js/sdk%2C@mintbase.js/react%2C@mintbase.js/data%2CArweave%2CMintbase%20Wallet-blue)](#)
-[![Framework](https://img.shields.io/badge/Framework-Next.js%2014-blue)](#)
+[![Framework](https://img.shields.io/badge/Framework-NearBOS-blue)](#)
 
 **Author:**
 
-[![Author](https://img.shields.io/twitter/follow/mintbase?style=social&logo=twitter)](https://twitter.com/mintbase) [![Organization](https://img.shields.io/badge/Mintbase-blue)](https://www.mintbase.xyz)
+[![Author](https://img.shields.io/twitter/follow/mintbase?style=social&logo=twitter)](https://twitter.com/mintbase) [![Organization](https://img.shields.io/badge/MintBOS-blue)](https://www.mintbase.genadrop.xyz)
 
 ## Project Walkthrough
 
@@ -305,18 +305,18 @@ Unlock Your NFT Storefront: Clone & Customize Your Path to Blockchain Success wi
 
 install dependencies
 ```
-pnpm install
+yarn
 ```
 and
 run the project
 ```
-pnpm dev
+yarn dev:apps
 ```
 
 
-This guide will take you step by step through the process of creating a basic marketplace where you can purchase tokens and filter your selection by store. It uses [mintbase-js/data](https://docs.mintbase.xyz/dev/mintbase-sdk-ref/data) for retrieving data and [mintbase-js/sdk](https://docs.mintbase.xyz/dev/mintbase-sdk-ref/sdk) for executing marketplace methods.
+This guide will take you step by step through the process of creating a basic marketplace where you can purchase tokens and filter your selection by price. It uses `getStoreNFTs`  and `buyTokens` from [mintbos sdk](https://near.social/bos.genadrop.near/widget/Mintbase.App.Index?page=resources&tab=sdk_guide) for retrieving data and executing marketplace methods.
 
-The mintbase-js/data package provides convenient functions for retrieving data from our indexer. In this example, you will be able to view and purchase NFTs from a specific store.
+The mintbase-sdk provides convenient functions for retrieving data from mintbasee indexer. In this example, you will be able to view and purchase NFTs from a specific store.
 
 You can find more information on Github: [GitHub link](https://github.com/Mintbase/mintbase-js/tree/beta/packages/data)
 
@@ -328,27 +328,39 @@ Before proceeding, it is important to have a wallet connection feature implement
 
 ## Step 2: Get NFTs from Store
 
-In this example, we utilized react-query to manage the loading state when retrieving NFTs from the contract via the storeNfts method. This method returns all listed NFTs from the specified contract, allowing you to display them in the user interface.
+In this example, we utilized useState to manage the loading state when retrieving NFTs from the contract via the storeNfts method. This method returns all listed NFTs from the specified contract, allowing you to display them in the user interface.
 
-```ts
-// src/hooks/useStoreNfts.ts
-import { useQuery } from 'react-query';
-import { storeNfts } from '@mintbase-js/data';
+```jsx
+// bos.genadrop.near/widget/Mintbase.utils.get_store_nfts.jsx
+const  { getStoreNFTs }  =  VM.require(
+"${alias_GENADROP}/widget/Mintbase.utils.sdk"
+) ||  {  getStoreNFTs:  ()  =>  new  Promise((resolve)  =>  resolve([]))  };
 
-const useStoreNfts = (store?: string) => {
-  const defaultStores = process.env.NEXT_PUBLIC_STORES || MAINNET_CONFIG.stores;
-  const formattedStores = defaultStores.split(/[ ,]+/);
+const perPage =  52;
+const  [nftData, setNftData]  =  useState([]);
+const  [loading, setLoading]  =  useState(true);
+const  [countNFTs, setCountNFTs]  =  useState(0);
+const  [pageNumber, setPageNumber]  =  useState(1);
 
-  const { isLoading, error, data } = useQuery(['storeNfts', store], () => storeNfts(store || formattedStores, true), {
-    retry: false,
-    refetchOnWindowFocus: false,
-    select: mapStoreNfts,
-  });
-
-  return { ...data, error, loading: isLoading };
-};
-
-export { useStoreNfts };
+getStoreNFTs &&
+getStoreNFTs({
+offset:  (pageNumber -  1)  * perPage,
+id: storeId ??  "nft.genadrop.near",
+limit: perPage,
+listedFilter:  true,
+accountId: context?.accountId  ||  "jgodwill.near",
+})
+.then(({ results, totalRecords, errors })  =>  {
+if  (errors)  {
+console.error(errors);
+}
+setCountNFTs(totalRecords);
+setLoading(false);
+setNftData(results);
+})
+.catch((error)  =>  {
+console.error(error);
+});
 ```
 
 ## Step 3: Get Store Data
