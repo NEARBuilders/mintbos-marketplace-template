@@ -321,7 +321,7 @@ yarn dev:apps
 
 This guide will take you step by step through the process of creating a basic marketplace where you can purchase tokens and filter your selection by price. It uses `getStoreNFTs` and `buyTokens` from [mintbos sdk](https://near.social/bos.genadrop.near/widget/Mintbase.App.Index?page=resources&tab=sdk_guide) for retrieving data and executing marketplace methods.
 
-The mintbase-sdk provides convenient functions for retrieving data from mintbasee indexer. In this example, you will be able to view and purchase NFTs from a specific store.
+The mintbase sdk provides convenient functions for retrieving data from mintbase indexer. In this example, you will be able to view and purchase NFTs from a specific store.
 
 You can find more information on Github: [GitHub link](https://github.com/Mintbase/mintbase-js/tree/beta/packages/data)
 
@@ -333,7 +333,7 @@ Before proceeding, it is important to have a wallet connection feature implement
 
 ## Step 2: Get NFTs from Store
 
-In this example, we utilized useState to manage the loading state when retrieving NFTs from the contract via the storeNfts method. This method returns all listed NFTs from the specified contract, allowing you to display them in the user interface.
+In this example, we utilized the getStoreNFTs method to retrieve NFTs and store this data in state via useState. This method returns all listed NFTs from the specified contract, allowing you to display them in the user interface.
 
 ```jsx
 // bos.genadrop.near/widget/Mintbase.utils.get_store_nfts.jsx
