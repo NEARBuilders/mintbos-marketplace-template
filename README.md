@@ -77,7 +77,10 @@ Be sure to replace `REPLACE_WITH_NEARFS_CID` with the cid you get from [publishi
 Once included, you can use the web component in your HTML:
 
 ```html
-<near-social-viewer src="mob.near/widget/N" initialprops='{"hashtag": "build"}' />
+<near-social-viewer
+  src="mob.near/widget/N"
+  initialprops='{"hashtag": "build"}'
+/>
 ```
 
 ## Attributes
@@ -97,9 +100,9 @@ To support specific features of the VM or an accompanying development server, pr
 
 ```jsonc
 {
-  "dev": { 
+  "dev": {
     // Configuration options dedicated to the development server
-    "hotreload": { 
+    "hotreload": {
       "enabled": boolean, // Determines if hot reload is enabled (e.g., true)
       "wss": string // WebSocket server URL to connect to. Optional. Defaults to `ws://${window.location.host}` (e.g., "ws://localhost:3001")
     }
@@ -271,7 +274,7 @@ This script will output the CID to terminal, as well as automatically save it un
 **Parameters:**
 
 - `signer account`: NEAR account to use for signing IPFS URL update transaction, see [web4-deploy](https://github.com/vgrichina/web4-deploy?tab=readme-ov-file#deploy-fully-on-chain-to-nearfs)
-- `signer key`:  NEAR account private key to use for signing. Should have base58-encoded key starting with `ed25519:`. Will attempt to sign from keychain (~/.near-credentials/) if not provided.
+- `signer key`: NEAR account private key to use for signing. Should have base58-encoded key starting with `ed25519:`. Will attempt to sign from keychain (~/.near-credentials/) if not provided.
 - `network`: NEAR network to use. Defaults to mainnet.
 
 This is an example of the NEARFS url, and you should replace with the cid you received above:
@@ -304,17 +307,19 @@ Unlock Your NFT Storefront: Clone & Customize Your Path to Blockchain Success wi
 ### Setup
 
 install dependencies
+
 ```
 yarn
 ```
+
 and
 run the project
+
 ```
 yarn dev:apps
 ```
 
-
-This guide will take you step by step through the process of creating a basic marketplace where you can purchase tokens and filter your selection by price. It uses `getStoreNFTs`  and `buyTokens` from [mintbos sdk](https://near.social/bos.genadrop.near/widget/Mintbase.App.Index?page=resources&tab=sdk_guide) for retrieving data and executing marketplace methods.
+This guide will take you step by step through the process of creating a basic marketplace where you can purchase tokens and filter your selection by price. It uses `getStoreNFTs` and `buyTokens` from [mintbos sdk](https://near.social/bos.genadrop.near/widget/Mintbase.App.Index?page=resources&tab=sdk_guide) for retrieving data and executing marketplace methods.
 
 The mintbase-sdk provides convenient functions for retrieving data from mintbasee indexer. In this example, you will be able to view and purchase NFTs from a specific store.
 
@@ -332,35 +337,35 @@ In this example, we utilized useState to manage the loading state when retrievin
 
 ```jsx
 // bos.genadrop.near/widget/Mintbase.utils.get_store_nfts.jsx
-const  { getStoreNFTs }  =  VM.require(
-"${alias_GENADROP}/widget/Mintbase.utils.sdk"
-) ||  {  getStoreNFTs:  ()  =>  new  Promise((resolve)  =>  resolve([]))  };
+const { getStoreNFTs } = VM.require(
+  "${alias_GENADROP}/widget/Mintbase.utils.sdk"
+) || { getStoreNFTs: () => new Promise((resolve) => resolve([])) };
 
-const perPage =  52;
-const  [nftData, setNftData]  =  useState([]);
-const  [loading, setLoading]  =  useState(true);
-const  [countNFTs, setCountNFTs]  =  useState(0);
-const  [pageNumber, setPageNumber]  =  useState(1);
+const perPage = 52;
+const [nftData, setNftData] = useState([]);
+const [loading, setLoading] = useState(true);
+const [countNFTs, setCountNFTs] = useState(0);
+const [pageNumber, setPageNumber] = useState(1);
 
 getStoreNFTs &&
-getStoreNFTs({
-offset:  (pageNumber -  1)  * perPage,
-id: storeId ??  "nft.genadrop.near",
-limit: perPage,
-listedFilter:  true,
-accountId: context?.accountId  ||  "jgodwill.near",
-})
-.then(({ results, totalRecords, errors })  =>  {
-if  (errors)  {
-console.error(errors);
-}
-setCountNFTs(totalRecords);
-setLoading(false);
-setNftData(results);
-})
-.catch((error)  =>  {
-console.error(error);
-});
+  getStoreNFTs({
+    offset: (pageNumber - 1) * perPage,
+    id: storeId ?? "nft.genadrop.near",
+    limit: perPage,
+    listedFilter: true,
+    accountId: context?.accountId || "jgodwill.near",
+  })
+    .then(({ results, totalRecords, errors }) => {
+      if (errors) {
+        console.error(errors);
+      }
+      setCountNFTs(totalRecords);
+      setLoading(false);
+      setNftData(results);
+    })
+    .catch((error) => {
+      console.error(error);
+    });
 ```
 
 ## Step 3: Get Store Data
@@ -369,40 +374,48 @@ To control the tabs, we need to retrieve store data using the storeData method. 
 
 ```ts
 // src/hooks/useStoreData.ts
-import { useQuery } from 'react-query';
-import { storeData } from '@mintbase-js/data';
+import { useQuery } from "react-query";
+import { storeData } from "@mintbase-js/data";
 
 const useStoreData = () => {
   const defaultStores = process.env.NEXT_PUBLIC_STORES || MAINNET_CONFIG.stores;
   const formattedStores = defaultStores.split(/[ ,]+/);
 
-  const { isLoading, error, data } = useQuery('storeData', () => storeData(formattedStores), {
-    retry: false,
-    refetchOnWindowFocus: false,
-    select: mapStoreData,
-  });
+  const { isLoading, error, data } = useQuery(
+    "storeData",
+    () => storeData(formattedStores),
+    {
+      retry: false,
+      refetchOnWindowFocus: false,
+      select: mapStoreData,
+    }
+  );
 
   return { ...data, error, loading: isLoading };
 };
 
 export { useStoreData };
-
 ```
+
 ## Step 4: Get Metadata from an NFT
 
 To display NFT pricing information, available quantities, and other details in the user interface, it is necessary to access the NFT metadata using the metadataByMetadataId method.
 
 ```ts
 // src/hooks/useMetadataByMetadataId.ts
-import { useQuery } from 'react-query';
-import { metadataByMetadataId } from '@mintbase-js/data';
+import { useQuery } from "react-query";
+import { metadataByMetadataId } from "@mintbase-js/data";
 
 const useMetadataByMetadataId = ({ metadataId }) => {
-  const { isLoading, data: metadata } = useQuery('metadataByMetadataId', () => metadataByMetadataId(metadataId), {
-    retry: false,
-    refetchOnWindowFocus: false,
-    select: mapMetadata,
-  });
+  const { isLoading, data: metadata } = useQuery(
+    "metadataByMetadataId",
+    () => metadataByMetadataId(metadataId),
+    {
+      retry: false,
+      refetchOnWindowFocus: false,
+      select: mapMetadata,
+    }
+  );
 
   return { ...metadata, isTokenListLoading: isLoading };
 };
@@ -416,16 +429,16 @@ To obtain the current price of the NFT in USD, it is necessary to retrieve the c
 
 ```ts
 // src/hooks/useNearPrice.ts
-import { useEffect, useState } from 'react';
-import { nearPrice } from '@mintbase-js/data';
+import { useEffect, useState } from "react";
+import { nearPrice } from "@mintbase-js/data";
 
 const useNearPrice = () => {
-  const [nearPriceData, setNearPriceData] = useState('0');
+  const [nearPriceData, setNearPriceData] = useState("0");
 
   useEffect(() => {
     const getNearPrice = async () => {
       const { data: priceData, error } = await nearPrice();
-      setNearPriceData(error ? '0' : priceData);
+      setNearPriceData(error ? "0" : priceData);
     };
 
     getNearPrice();
@@ -435,34 +448,34 @@ const useNearPrice = () => {
 };
 
 export { useNearPrice };
-``````
+```
 
 ## Step 6: Execute the Contract Call - Buy
 
 The execute method accepts one or more contract call objects and executes them using a specified wallet instance. In this example, we need to use the execute method to execute the "buy" call, allowing the user to purchase the desired NFT.
 
-````ts
+```ts
 const singleBuy = async () => {
-    const wallet = await selector.wallet();
+  const wallet = await selector.wallet();
 
-    if (tokenId) {
-      (await execute(
-        { wallet, callbackArgs: callback },
-        {
-          ...buy({
-            contractAddress: nftContractId,
-            tokenId,
-            affiliateAccount:
-              process.env.NEXT_PUBLIC_AFFILIATE_ACCOUNT ||
-              MAINNET_CONFIG.affiliate,
-            marketId,
-            price: nearToYocto(currentPrice?.toString()) || "0",
-          }),
-        }
-      )) as FinalExecutionOutcome;
-    }
-  };
-``````
+  if (tokenId) {
+    (await execute(
+      { wallet, callbackArgs: callback },
+      {
+        ...buy({
+          contractAddress: nftContractId,
+          tokenId,
+          affiliateAccount:
+            process.env.NEXT_PUBLIC_AFFILIATE_ACCOUNT ||
+            MAINNET_CONFIG.affiliate,
+          marketId,
+          price: nearToYocto(currentPrice?.toString()) || "0",
+        }),
+      }
+    )) as FinalExecutionOutcome;
+  }
+};
+```
 
 ## Set ENV variables
 
