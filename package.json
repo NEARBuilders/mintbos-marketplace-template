@@ -1,10 +1,9 @@
 {
   "name": "near-bos-webcomponent",
   "version": "0.1.2",
-  "homepage": "https://github.com/NEARBuilders/near-bos-webcomponent",
   "repository": {
     "type": "git",
-    "url": "https://github.com/NEARBuilders/near-bos-webcomponent.git"
+    "url": "https://github.com/NEARBuilders/mintbos-marketplace-template.git"
   },
   "files": [
     "dist/",
@@ -34,7 +33,7 @@
     "rspack": "rspack build",
     "bw": "bos-workspace",
     "dev": "yarn run clean && concurrently \"yarn run dev:gateway\" \"wait-on dist/index.html && yarn run dev:apps\"",
-    "dev:apps": "yarn run bw dev -g ./dist",
+    "dev:apps": "yarn run bw dev",
     "dev:gateway": "yarn run rspack --env mode=development --watch",
     "prod": "yarn run rspack --env mode=production",
     "prod:analyze": "yarn run prod --analyze",

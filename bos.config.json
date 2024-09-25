@@ -3,7 +3,7 @@
   "aliases": ["./aliases.mainnet.json"],
   "index": "blackdragon.near/widget/Index",
   "gateway": {
-    "bundleUrl": "https://cdn.jsdelivr.net/npm/near-bos-webcomponent@latest",
+    "bundleUrl": "./dist",
     "tagName": "near-social-viewer"
   },
   "ipfs": {
