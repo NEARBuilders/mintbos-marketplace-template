@@ -1,5 +1,14 @@
 {
-  "account": "blackdrogon.near",
+  "account": "blackdragon.near",
   "aliases": ["./aliases.mainnet.json"],
-  "index": "blackdrogon.near/widget/Index"
+  "index": "blackdragon.near/widget/Index",
+  "gateway": {
+    "bundleUrl": "https://ipfs.web4.near.page/ipfs/bafybeiftqwg2qdfhjwuxt5cjvvsxflp6ghhwgz5db3i4tqipocvyzhn2bq",
+    "tagName": "near-social-viewer"
+  },
+  "ipfs": {
+    "gateway": "https://ipfs.near.social/ipfs",
+    "uploadApi": "https://ipfs.near.social/add",
+    "uploadApiHeaders": {}
+  }
 }
