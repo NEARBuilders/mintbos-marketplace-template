@@ -1,7 +1,7 @@
 {
-  "account": "blackdragon.near",
+  "account": "example.near",
   "aliases": ["./aliases.mainnet.json"],
-  "index": "blackdragon.near/widget/Index",
+  "index": "example.near/widget/Index",
   "gateway": {
     "bundleUrl": "./dist",
     "tagName": "near-social-viewer"
