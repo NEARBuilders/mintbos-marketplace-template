@@ -216,7 +216,7 @@ Once done, remember to [Publish the build to NEARFS](./gateway-bundle/README.md#
 
 Rather than deploying to a hosting provider like Vercel, this repository comes equipped with the scripts necessary to deploy to [Web4](https://github.com/vgrichina/web4), for fully decentralized web hosting. For full documentation, refer to [web4-deploy](https://github.com/vgrichina/web4-deploy).
 
-1. Build the distribution bundle, `pnpm run build`
+1. Build the distribution bundle, `pnpm run build`. This will populate metadata via the index widget's metadata json, and use details from bos.config.json to consturct the `index.html`.
 2. Be sure to have deployed a web4 smart contract, such as the [web4-min-contract](https://github.com/vgrichina/web4-min-contract) to web4.YOUR_ACCOUNT.near
 3. Configure with the web4 account and run `pnpm run web4:deploy`
 
