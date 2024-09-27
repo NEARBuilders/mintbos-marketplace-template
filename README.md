@@ -4,8 +4,7 @@ Decentralized front ends meets NFT infrastructure on NEAR. Clone & customize thi
 
 Read the full [documentation](https://mintbase.genadrop.xyz/docs).
 
-[![Demo](https://img.shields.io/badge/Demo-Visit%20Demo-brightgreen)](TODO)
-[![Deploy](https://img.shields.io/badge/Deploy-on%20Vercel-blue)](TODO)
+[![Demo](https://img.shields.io/badge/Demo-Visit%20Demo-brightgreen)](https://mintbos-marketplace-template.vercel.app/)
 
 **Tooling:**
 
@@ -38,7 +37,7 @@ The mintbos-sdk provides convenient functions for retrieving data from Mintbase 
 
 You can find more information on Github: [GitHub link](https://github.com/NEARBuilders/mintbos-marketplace-template)
 
-A live demo of the marketplace can be found here: [Live demo link](TODO)
+A live demo of the marketplace can be found here: [Live demo link](https://mintbos-marketplace-template.vercel.app/)
 
 ## Step 1: Connect Wallet
 
