@@ -77,7 +77,10 @@ Be sure to replace `REPLACE_WITH_NEARFS_CID` with the cid you get from [publishi
 Once included, you can use the web component in your HTML:
 
 ```html
-<near-social-viewer src="mob.near/widget/N" initialprops='{"hashtag": "build"}' />
+<near-social-viewer
+  src="mob.near/widget/N"
+  initialprops='{"hashtag": "build"}'
+/>
 ```
 
 ## Attributes
@@ -97,9 +100,9 @@ To support specific features of the VM or an accompanying development server, pr
 
 ```jsonc
 {
-  "dev": { 
+  "dev": {
     // Configuration options dedicated to the development server
-    "hotreload": { 
+    "hotreload": {
       "enabled": boolean, // Determines if hot reload is enabled (e.g., true)
       "wss": string // WebSocket server URL to connect to. Optional. Defaults to `ws://${window.location.host}` (e.g., "ws://localhost:3001")
     }
@@ -271,7 +274,7 @@ This script will output the CID to terminal, as well as automatically save it un
 **Parameters:**
 
 - `signer account`: NEAR account to use for signing IPFS URL update transaction, see [web4-deploy](https://github.com/vgrichina/web4-deploy?tab=readme-ov-file#deploy-fully-on-chain-to-nearfs)
-- `signer key`:  NEAR account private key to use for signing. Should have base58-encoded key starting with `ed25519:`. Will attempt to sign from keychain (~/.near-credentials/) if not provided.
+- `signer key`: NEAR account private key to use for signing. Should have base58-encoded key starting with `ed25519:`. Will attempt to sign from keychain (~/.near-credentials/) if not provided.
 - `network`: NEAR network to use. Defaults to mainnet.
 
 This is an example of the NEARFS url, and you should replace with the cid you received above:
@@ -279,6 +282,181 @@ This is an example of the NEARFS url, and you should replace with the cid you re
 <https://ipfs.web4.near.page/ipfs/bafybeiftqwg2qdfhjwuxt5cjvvsxflp6ghhwgz5db3i4tqipocvyzhn2bq/>
 
 After uploading, it normally takes some minutes before the files are visible on NEARFS. When going to the expected URL based on the IPFS address we saw above, we will first see the message `Not found`.
+
+# Marketplace
+
+<img src="https://i.imgur.com/FjcUss9.png" alt="cover_image" width="0" />
+
+Unlock Your NFT Storefront: Clone & Customize Your Path to Blockchain Success with this whitelabel marketplace template!
+
+[![Demo](https://img.shields.io/badge/Demo-Visit%20Demo-brightgreen)](https://marketplace-template.mintbase.xyz/)
+[![Deploy](https://img.shields.io/badge/Deploy-on%20Vercel-blue)](https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2FMintbase%2Ftemplates%2Ftree%2Fmain%2Fmarketplace)
+
+**Tooling:**
+
+[![Use Case](https://img.shields.io/badge/Use%20Case-Marketplace-blue)](#)
+[![Tools](https://img.shields.io/badge/Tools-@mintbase.js/sdk%2C@mintbase.js/react%2C@mintbase.js/data%2CArweave%2CMintbase%20Wallet-blue)](#)
+[![Framework](https://img.shields.io/badge/Framework-NearBOS-blue)](#)
+
+**Author:**
+
+[![Author](https://img.shields.io/twitter/follow/mintbase?style=social&logo=twitter)](https://twitter.com/mintbase) [![Organization](https://img.shields.io/badge/MintBOS-blue)](https://www.mintbase.genadrop.xyz)
+
+## Project Walkthrough
+
+### Setup
+
+install dependencies
+
+```
+yarn
+```
+
+and
+run the project
+
+```
+yarn dev:apps
+```
+
+This guide will take you step by step through the process of creating a basic marketplace where you can purchase tokens and filter your selection by price. It uses `getStoreNFTs` and `buyTokens` from [mintbos sdk](https://near.social/bos.genadrop.near/widget/Mintbase.App.Index?page=resources&tab=sdk_guide) for retrieving data and executing marketplace methods.
+
+The mintbase sdk provides convenient functions for retrieving data from mintbase indexer. In this example, you will be able to view and purchase NFTs from a specific store.
+
+You can find more information on Github: [GitHub link](https://github.com/Mintbase/mintbase-js/tree/beta/packages/data)
+
+A live demo of the marketplace can be found here: [Live demo link](https://marketplace-template.mintbase.xyz/)
+
+## Step 1: Connect Wallet
+
+Before proceeding, it is important to have a wallet connection feature implemented in your application in order to interact with the contract. To do this, you can check our guide [Wallet Connection Guide](https://docs.mintbase.xyz/dev/getting-started/add-wallet-connection-to-your-react-app).
+
+## Step 2: Get NFTs from Store
+
+In this example, we utilized the getStoreNFTs method to retrieve NFTs and store this data in state via useState. This method returns all listed NFTs from the specified contract, allowing you to display them in the user interface.
+
+```jsx
+// widget/page/home
+const { getStoreNFTs } = VM.require(
+  "${alias_GENADROP}/widget/Mintbase.utils.sdk"
+) || { getStoreNFTs: () => new Promise((resolve) => resolve([])) };
+
+const perPage = 52;
+const [nftData, setNftData] = useState([]);
+const [loading, setLoading] = useState(true);
+const [countNFTs, setCountNFTs] = useState(0);
+const [pageNumber, setPageNumber] = useState(1);
+
+getStoreNFTs &&
+  getStoreNFTs({
+    offset: (pageNumber - 1) * perPage,
+    id: storeId ?? "nft.genadrop.near",
+    limit: perPage,
+    listedFilter: true,
+    accountId: context?.accountId || "jgodwill.near",
+  })
+    .then(({ results, totalRecords, errors }) => {
+      if (errors) {
+        console.error(errors);
+      }
+      setCountNFTs(totalRecords);
+      setLoading(false);
+      setNftData(results);
+    })
+    .catch((error) => {
+      console.error(error);
+    });
+```
+
+## Step 3: Get Store Data
+
+To control the tabs, we need to retrieve store data using the getCombinedStoreData method. This method returns the data from the specified contract, enabling you to display it in the user interface.
+
+```jsx
+// bos.genadrop.near/widget/Mintbase.utils.get_combined_store_data.jsx
+const { getCombinedStoreData } = VM.require(
+  "${config_account}/widget/Mintbase.utils.sdk"
+) || {
+  getCombinedStoreData: () => {},
+};
+
+const [storeData, setStoreData] = useState(null);
+
+useEffect(() => {
+  accountId &&
+    getCombinedStoreData({ id: accountId, limit, offset })
+      .then(({ data, errors }) => {
+        if (errors) {
+          console.error(errors);
+        }
+        setStoreData(data);
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+}, [accountId]);
+```
+
+## Step 6: Execute the Contract Call - Buy
+
+The execute method accepts one or more contract call objects and executes them using a specified wallet instance. In this example, we need to use the execute method to execute the "buy" call, allowing the user to purchase the desired NFT.
+
+```jsx
+// widget/page/product
+const { buyTokens } = VM.require(
+  "${alias_GENADROP}/widget/Mintbase.NFT.modules"
+) || { buyTokens: () => {} };
+
+const { data } = props;
+
+const firstListing = data?.listings[0];
+
+const handleBuy = () => {
+  if (!context.accountId) return;
+  buyTokens({
+    contractId: data?.nft_contract_id,
+    tokenId: data?.token_id,
+    price: data?.listings[0]?.price,
+    mainnet: context?.networkId === "mainnet",
+    ftAddress: firstListing?.currency,
+  });
+};
+```
+
+alternatively, for multiple NFTs in the cart, we map through the items from the local storage `cart` and pass them into the `buyTokens` method that executes thesame "buy" call as above
+
+```jsx
+//widget/page/cart
+const { getCart } = VM.require("blackdragon.near/widget/lib.cart") || {
+  getCart: () => {},
+};
+
+const cart = getCart();
+const newData = Object.values(cart).map((data) => {
+  const firstListing = data?.listings[0];
+  return {
+    contractId: data?.nft_contract_id,
+    tokenId: data?.token_id,
+    price: data?.listings[0]?.price,
+    mainnet: context?.networkId === "mainnet",
+    ftAddress: firstListing?.currency,
+  };
+});
+
+const handleBuy = () => {
+  const data = newData;
+
+  if (!context.accountId) return;
+  buyTokens(data);
+};
+```
+
+## Get in touch
+
+- Support: [Join the Telegram](https://tg.me/mintdev)
+- Twitter: [@mintbase](https://twitter.com/mintbase)
+
+<img src="https://i.imgur.com/DPWBh8C.png" alt="detail_image" width="0" />
 
 ## Contributing
 
