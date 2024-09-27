@@ -8,9 +8,9 @@ jobs:
     with:
       bw-legacy: false
       deploy-env: "testnet"
-      app-name: "bos-blackdragon-marketplace"
-      deploy-account-address: blackdragon.testnet
-      signer-account-address: blackdragon.testnet
-      signer-public-key: ${{ vars.TESTNET_BLACKDRAGON_MARKETPLACE_PUBLIC_KEY }}
+      app-name: "mintbos-marketplace-template"
+      deploy-account-address: example.testnet
+      signer-account-address: example.testnet
+      signer-public-key: ${{ vars.TESTNET_EXAMPLE_PUBLIC_KEY }}
     secrets:
-      SIGNER_PRIVATE_KEY: ${{ secrets.TESTNET_BLACKDRAGON_MARKETPLACE_SIGNER_KEY }}
+      SIGNER_PRIVATE_KEY: ${{ secrets.TESTNET_EXAMPLE_SIGNER_KEY }}

@@ -212,7 +212,21 @@ Follow the [Customizing the Gateway](https://github.com/NEARBuilders/bos-workspa
 
 Once done, remember to [Publish the build to NEARFS](./gateway-bundle/README.md#publishing-to-nearfs), and then this bundleUrl can be configured in `bos.config.json`.
 
-## Step 8: Deploy to Web4
+## Step 8: Deploy
+
+### Deploy to Vercel
+
+To deploy to Vercel, configure the Build & Development Settings to the following:
+
+```txt
+Framework Preset: "Other"
+Output Directory: (Override) "dist"
+```
+
+On deploy, this will build the distribution bundle via `pnpm run build`.
+This build command populates metadata from the index widget's metadata json, and uses details from bos.config.json to consturct the `index.html`.
+
+### Deploy to Web4
 
 Rather than deploying to a hosting provider like Vercel, this repository comes equipped with the scripts necessary to deploy to [Web4](https://github.com/vgrichina/web4), for fully decentralized web hosting. For full documentation, refer to [web4-deploy](https://github.com/vgrichina/web4-deploy).
 
