@@ -370,152 +370,83 @@ getStoreNFTs &&
 
 ## Step 3: Get Store Data
 
-To control the tabs, we need to retrieve store data using the storeData method. This method returns the data from the specified contract, enabling you to display it in the user interface.
+To control the tabs, we need to retrieve store data using the getCombinedStoreData method. This method returns the data from the specified contract, enabling you to display it in the user interface.
 
-```ts
-// src/hooks/useStoreData.ts
-import { useQuery } from "react-query";
-import { storeData } from "@mintbase-js/data";
-
-const useStoreData = () => {
-  const defaultStores = process.env.NEXT_PUBLIC_STORES || MAINNET_CONFIG.stores;
-  const formattedStores = defaultStores.split(/[ ,]+/);
-
-  const { isLoading, error, data } = useQuery(
-    "storeData",
-    () => storeData(formattedStores),
-    {
-      retry: false,
-      refetchOnWindowFocus: false,
-      select: mapStoreData,
-    }
-  );
-
-  return { ...data, error, loading: isLoading };
+```jsx
+// bos.genadrop.near/widget/Mintbase.utils.get_combined_store_data.jsx
+const { getCombinedStoreData } = VM.require(
+  "${config_account}/widget/Mintbase.utils.sdk"
+) || {
+  getCombinedStoreData: () => {},
 };
 
-export { useStoreData };
-```
+const [storeData, setStoreData] = useState(null);
 
-## Step 4: Get Metadata from an NFT
-
-To display NFT pricing information, available quantities, and other details in the user interface, it is necessary to access the NFT metadata using the metadataByMetadataId method.
-
-```ts
-// src/hooks/useMetadataByMetadataId.ts
-import { useQuery } from "react-query";
-import { metadataByMetadataId } from "@mintbase-js/data";
-
-const useMetadataByMetadataId = ({ metadataId }) => {
-  const { isLoading, data: metadata } = useQuery(
-    "metadataByMetadataId",
-    () => metadataByMetadataId(metadataId),
-    {
-      retry: false,
-      refetchOnWindowFocus: false,
-      select: mapMetadata,
-    }
-  );
-
-  return { ...metadata, isTokenListLoading: isLoading };
-};
-
-export { useMetadataByMetadataId };
-```
-
-## Step 5: Get Current NEAR Price
-
-To obtain the current price of the NFT in USD, it is necessary to retrieve the current Near price. We accomplish this by using the nearPrice method.
-
-```ts
-// src/hooks/useNearPrice.ts
-import { useEffect, useState } from "react";
-import { nearPrice } from "@mintbase-js/data";
-
-const useNearPrice = () => {
-  const [nearPriceData, setNearPriceData] = useState("0");
-
-  useEffect(() => {
-    const getNearPrice = async () => {
-      const { data: priceData, error } = await nearPrice();
-      setNearPriceData(error ? "0" : priceData);
-    };
-
-    getNearPrice();
-  }, []);
-
-  return nearPriceData;
-};
-
-export { useNearPrice };
+useEffect(() => {
+  accountId &&
+    getCombinedStoreData({ id: accountId, limit, offset })
+      .then(({ data, errors }) => {
+        if (errors) {
+          console.error(errors);
+        }
+        setStoreData(data);
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+}, [accountId]);
 ```
 
 ## Step 6: Execute the Contract Call - Buy
 
 The execute method accepts one or more contract call objects and executes them using a specified wallet instance. In this example, we need to use the execute method to execute the "buy" call, allowing the user to purchase the desired NFT.
 
-```ts
-const singleBuy = async () => {
-  const wallet = await selector.wallet();
+```jsx
+const { buyTokens } = VM.require(
+  "${alias_GENADROP}/widget/Mintbase.NFT.modules"
+) || { buyTokens: () => {} };
 
-  if (tokenId) {
-    (await execute(
-      { wallet, callbackArgs: callback },
-      {
-        ...buy({
-          contractAddress: nftContractId,
-          tokenId,
-          affiliateAccount:
-            process.env.NEXT_PUBLIC_AFFILIATE_ACCOUNT ||
-            MAINNET_CONFIG.affiliate,
-          marketId,
-          price: nearToYocto(currentPrice?.toString()) || "0",
-        }),
-      }
-    )) as FinalExecutionOutcome;
-  }
+const { data } = props;
+
+const firstListing = data?.listings[0];
+
+const handleBuy = () => {
+  if (!context.accountId) return;
+  buyTokens({
+    contractId: data?.nft_contract_id,
+    tokenId: data?.token_id,
+    price: data?.listings[0]?.price,
+    mainnet: context?.networkId === "mainnet",
+    ftAddress: firstListing?.currency,
+  });
 };
 ```
 
-## Set ENV variables
+alternatively, for multiple NFTs in the cart, we map through the items from the local storage `cart` and pass them into the `buyTokens` method that executes thesame "buy" call as above
 
-Once that's done, copy the `.env.example` file in this directory to `.env.local` (which will be ignored by Git):
+```jsx
+const { getCart } = VM.require("blackdragon.near/widget/lib.cart") || {
+  getCart: () => {},
+};
 
-```bash
-cp .env.example .env.local
-```
+const cart = getCart();
+const newData = Object.values(cart).map((data) => {
+  const firstListing = data?.listings[0];
+  return {
+    contractId: data?.nft_contract_id,
+    tokenId: data?.token_id,
+    price: data?.listings[0]?.price,
+    mainnet: context?.networkId === "mainnet",
+    ftAddress: firstListing?.currency,
+  };
+});
 
-if you use windows without powershell or cygwin:
+const handleBuy = () => {
+  const data = newData;
 
-```bash
-copy .env.example .env.local
-```
-
-To get your `api key` visit :
-
-[Mintbase Developers Page for Mainnet](https://www.mintbase.xyz/developer):
-[Mintbase Developers Page for testnet](https://testnet.mintbase.xyz/developer):
-
-```
-NEXT_PUBLIC_DEVELOPER_KEY=your_mintbase_api_key
-```
-
-`NEXT_PUBLIC_NETWORK` could be `testnet` or `mainnet`
-
-```
-NEXT_PUBLIC_NETWORK=testnet
-```
-
-`NEXT_PUBLIC_STORES` is your store's ids
-
-```
-NEXT_PUBLIC_STORES=latium.mintspace2.testnet,mufasa.mintspace2.testnet
-```
-
-`NEXT_PUBLIC_AFFILIATE_ACCOUNT` is your near account where your should get your market fee
-
-```
-NEXT_PUBLIC_AFFILIATE_ACCOUNT=your_near_account.near
+  if (!context.accountId) return;
+  buyTokens(data);
+};
 ```
 
 ## Get in touch

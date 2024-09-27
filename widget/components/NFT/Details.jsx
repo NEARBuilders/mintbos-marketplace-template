@@ -18,9 +18,6 @@ const { addItemsToCart, removeItemsFromCart, itemExistsInCart } = VM.require(
 const { href } = VM.require("buildhub.near/widget/lib.url") || {
   href: () => {},
 };
-
-console.log(data);
-
 const nearIcon = (
   <svg
     width="50px"
