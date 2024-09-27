@@ -336,7 +336,7 @@ Before proceeding, it is important to have a wallet connection feature implement
 In this example, we utilized the getStoreNFTs method to retrieve NFTs and store this data in state via useState. This method returns all listed NFTs from the specified contract, allowing you to display them in the user interface.
 
 ```jsx
-// bos.genadrop.near/widget/Mintbase.utils.get_store_nfts.jsx
+// widget/page/home
 const { getStoreNFTs } = VM.require(
   "${alias_GENADROP}/widget/Mintbase.utils.sdk"
 ) || { getStoreNFTs: () => new Promise((resolve) => resolve([])) };
@@ -402,6 +402,7 @@ useEffect(() => {
 The execute method accepts one or more contract call objects and executes them using a specified wallet instance. In this example, we need to use the execute method to execute the "buy" call, allowing the user to purchase the desired NFT.
 
 ```jsx
+// widget/page/product
 const { buyTokens } = VM.require(
   "${alias_GENADROP}/widget/Mintbase.NFT.modules"
 ) || { buyTokens: () => {} };
@@ -425,6 +426,7 @@ const handleBuy = () => {
 alternatively, for multiple NFTs in the cart, we map through the items from the local storage `cart` and pass them into the `buyTokens` method that executes thesame "buy" call as above
 
 ```jsx
+//widget/page/cart
 const { getCart } = VM.require("blackdragon.near/widget/lib.cart") || {
   getCart: () => {},
 };
