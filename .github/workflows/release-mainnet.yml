@@ -11,6 +11,6 @@ jobs:
       app-name: "mintbos-marketplace-template"
       deploy-account-address: example.near
       signer-account-address: example.near
-      signer-public-key: ${{ vars.MAINNET_EXAMPLE_PUBLIC_KEY }}
+      signer-public-key: ${{ vars.MAINNET_ACCOUNT_PUBLIC_KEY }}
     secrets:
-      SIGNER_PRIVATE_KEY: ${{ secrets.MAINNET_EXAMPLE_SIGNER_KEY }}
+      SIGNER_PRIVATE_KEY: ${{ secrets.MAINNET_ACCOUNT_SIGNER_KEY }}

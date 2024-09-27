@@ -11,6 +11,6 @@ jobs:
       app-name: "mintbos-marketplace-template"
       deploy-account-address: example.testnet
       signer-account-address: example.testnet
-      signer-public-key: ${{ vars.TESTNET_EXAMPLE_PUBLIC_KEY }}
+      signer-public-key: ${{ vars.TESTNET_ACCOUNT_PUBLIC_KEY }}
     secrets:
-      SIGNER_PRIVATE_KEY: ${{ secrets.TESTNET_EXAMPLE_SIGNER_KEY }}
+      SIGNER_PRIVATE_KEY: ${{ secrets.TESTNET_ACCOUNT_SIGNER_KEY }}
