@@ -1,3 +1,28 @@
 {
-  "blackdrogon.near": {}
+  "example.near": {
+    "widget": {
+      "Index": {
+        "metadata": {
+          "name": "MintBOS Marketplace Template",
+          "description": "Whitelabel marketplace template built with MintBOS on NEAR's decentralized front-end framework",
+          "linktree": {
+            "website": ""
+          },
+          "image": {
+            "ipfs_cid": "bafkreicwzq6dlcynhceovrtslsjja2d76b7ysnjih4qmqlk7atre3w2nay"
+          },
+          "backgroundImage": {
+            "ipfs_cid": "bafkreicwzq6dlcynhceovrtslsjja2d76b7ysnjih4qmqlk7atre3w2nay"
+          },
+          "tags": {
+            "bitte": "",
+            "mintbos": "",
+            "marketplace": "",
+            "open-source": "",
+            "app": ""
+          }
+        }
+      }
+    }
+  }
 }
