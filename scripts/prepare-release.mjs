@@ -67,7 +67,7 @@ async function exec(command, env = {}) {
 }
 
 async function updatePackageJson(cid) {
-  const packageJsonPath = path.join(rootDir, "package.json");
+  const packageJsonPath = path.join(rootDir, "gateway-bundle", "package.json");
   let packageJson = JSON.parse(await fs.readFile(packageJsonPath, "utf8"));
   packageJson.nearfs = { ...packageJson.nearfs, cid };
   await fs.writeFile(packageJsonPath, JSON.stringify(packageJson, null, 2));

@@ -47,7 +47,7 @@ async function getBundleUrls(bundleUrl, network, rootDir) {
     bundleUrl.startsWith("../")
   ) {
     // Local path
-    const packageJsonPath = path.join(rootDir, "gateway", "package.json");
+    const packageJsonPath = path.join(rootDir, "gateway-bundle", "package.json");
     const packageJson = await readJsonFile(packageJsonPath);
     const cid = packageJson.nearfs?.cid;
 
