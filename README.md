@@ -23,12 +23,16 @@ Install dependencies
 ```cmd
 pnpm install
 ```
-
 and run the project
-
 ```cmd
 pnpm run dev
 ```
+or 
+```cmd
+pnpm run dev:testnet
+
+```
+for testnet
 
 ## Project Walkthrough
 

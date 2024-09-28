@@ -101,7 +101,8 @@ const Card = ({ data }) => {
     box-shadow: rgba(0, 0, 0, 0.08) 0px 4px 16px;
     transition: background-color 0.25s ease-in-out;
     border: 4px solid #ed8a71;
-    max-width: 300px;
+    min-width: 300px;
+    max-width: 350px;
     margin: 0 auto;
     .title,
     .price {
