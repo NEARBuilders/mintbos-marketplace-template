@@ -13,7 +13,7 @@
     "bw": "bos-workspace",
     "dev": "pnpm run bw dev",
     "dev:gateway": "pnpm --filter gateway dev",
-    "build": "node scripts/generate-index.mjs --network mainnet --output dist",
+    "build": "node scripts/generate-index.mjs --network testnet --output dist",
     "build:testnet": "node scripts/generate-index.mjs --network testnet --output dist",
     "web4:deploy": "NEAR_ENV=mainnet npx web4-deploy dist account.near --nearfs",
     "test": "npx playwright test",
