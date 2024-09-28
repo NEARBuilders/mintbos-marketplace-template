@@ -1,0 +1,1 @@
+export const ROOT_SRC = "mintbos.testnet/widget/Index";

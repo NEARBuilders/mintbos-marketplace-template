@@ -266,7 +266,6 @@ const Header = () => (
                   return (
                     <button
                       onClick={signIn}
-                      id="open-walletselector-button"
                       type="button"
                       class="login-button button"
                     >
