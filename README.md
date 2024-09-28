@@ -4,12 +4,13 @@ Decentralized front ends meets NFT infrastructure on NEAR. Clone & customize thi
 
 Read the full [documentation](https://mintbase.genadrop.xyz/docs).
 
-[![Demo](https://img.shields.io/badge/Demo-Visit%20Demo-brightgreen)](https://mintbos-marketplace-template.vercel.app/)
+[![Demo](https://img.shields.io/badge/Demo-Web4%20Demo-brightgreen)](https://mintbos.testnet.page/)
+[![Demo](https://img.shields.io/badge/Demo-Vercel%20Demo-black)](https://mintbos-marketplace-template.vercel.app/)
 
 **Tooling:**
 
 [![Use Case](https://img.shields.io/badge/Use%20Case-Marketplace-blue)](#)
-[![Framework](https://img.shields.io/badge/Framework-Near%20BOS-blue)](https://docs.near.org/build/near-components/what-is)
+[![Framework](https://img.shields.io/badge/Framework-Near%20BOS-brightgreen)](https://docs.near.org/build/near-components/what-is)
 
 **Author:**
 
