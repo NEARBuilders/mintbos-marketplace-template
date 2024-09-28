@@ -13,6 +13,7 @@
   },
   "overrides": {
         "testnet": {
+          "index": "mintbos.testnet/widget/Index",
           "account": "mintbos.testnet",
           "aliases": ["./aliases.testnet.json"]
         }
