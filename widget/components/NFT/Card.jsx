@@ -102,6 +102,7 @@ const Card = ({ data }) => {
     transition: background-color 0.25s ease-in-out;
     border: 4px solid #ed8a71;
     max-width: 300px;
+    margin: 0 auto;
     .title,
     .price {
       font-size: 16px;
