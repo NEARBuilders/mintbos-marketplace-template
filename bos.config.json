@@ -10,5 +10,11 @@
     "gateway": "https://ipfs.near.social/ipfs",
     "uploadApi": "https://ipfs.near.social/add",
     "uploadApiHeaders": {}
-  }
+  },
+  "overrides": {
+        "testnet": {
+          "account": "mintbos.testnet",
+          "aliases": ["./aliases.testnet.json"]
+        }
+      }
 }
