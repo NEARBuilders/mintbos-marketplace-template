@@ -16,7 +16,7 @@ const [pageNumber, setPageNumber] = useState(1);
 getStoreNFTs &&
   getStoreNFTs({
     offset: (pageNumber - 1) * perPage,
-    id: storeId ?? "nft.genadrop.near",
+    id: storeId ?? "${alias_GENADROP_NFT}",
     limit: perPage,
     listedFilter: true,
     accountId: context?.accountId || "jgodwill.near",

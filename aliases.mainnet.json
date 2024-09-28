@@ -4,5 +4,6 @@
   "DEVS": "devs.near",
   "BUILD": "builddao.near",
   "GENADROP": "bos.genadrop.near",
+  "GENADROP_NFT": "nft.genadrop.near",
   "CART_KEY": "mintbos-template-cart"
 }

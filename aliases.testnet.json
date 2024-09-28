@@ -4,5 +4,6 @@
   "DEVS": "neardevs.testnet",
   "BUILD": "builddao.testnet",
   "GENADROP": "mintbos.testnet",
+  "GENADROP_NFT": "genadrop-test.mpadev.testnet",
   "CART_KEY": "mintbos-template-cart"
 }
