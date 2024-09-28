@@ -73,3 +73,9 @@ Rather than deploying to a hosting provider like Vercel, this repository comes e
 3. Configure with the web4 account and run `pnpm run web4:deploy`
 
 This final command will upload the `/dist` to [NEARFS](https://github.com/vgrichina/nearfs) and then call `web4_setStaticUrl` on your web4 contract to point to this uploaded bundle.
+
+## Development
+
+1. Configure [bos.config.json](../bos.config.json) `gateway.bundleUrl` to be a relative path to this custom gateway's dist, e.g. `./gateway-bundle/dist`
+2. Make sure you have the dev command running for this, `pnpm run dev:gateway` from root, or `pnpm run dev` from here.
+3. Once there has been as successful build, this prepares the `main.bundle.js` needed 

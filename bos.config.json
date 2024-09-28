@@ -3,7 +3,7 @@
   "aliases": ["./aliases.mainnet.json"],
   "index": "example.near/widget/Index",
   "gateway": {
-    "bundleUrl": "./dist",
+    "bundleUrl": "./gateway-bundle/dist",
     "tagName": "near-social-viewer"
   },
   "ipfs": {
