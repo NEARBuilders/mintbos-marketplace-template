@@ -242,7 +242,7 @@ const Card = ({ data }) => {
               data.media ||
               "https://ipfs.near.social/ipfs/bafkreiajgp5bmkidwesy2d6tsbdkhyfzjtom2wse2sjcwii227lt5audvq"
             }
-            alt="nft"
+            alt="item-image"
           />
         </div>
         <div className="price-area p-3">
