@@ -177,6 +177,7 @@ return (
       </li>
         <div>
             <Wallet
+              config={{ contractId: "${alias_SOCIAL}" }}
               provides={({ signIn, signOut }) => {
                 return (
                   <button

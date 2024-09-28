@@ -432,6 +432,7 @@ const buyButton = context.accountId ? (
   </button>
 ) : (
   <Wallet
+    config={{ contractId: "${alias_SOCIAL}" }}
     provides={({ signIn, signOut }) => {
       return (
         <button
