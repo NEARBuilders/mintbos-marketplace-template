@@ -199,6 +199,7 @@ const Card = ({ data }) => {
     </button>
   ) : (
     <Wallet
+      config={{ contractId: "${alias_SOCIAL}" }}
       provides={({ signIn, signOut }) => {
         return (
           <button

@@ -262,6 +262,7 @@ const Header = () => (
           ) : (
             <div style={{ width: 100 }} class="login-container">
               <Wallet
+                config={{ contractId: "${alias_SOCIAL}" }}
                 provides={({ signIn, signOut }) => {
                   return (
                     <button

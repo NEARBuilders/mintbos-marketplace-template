@@ -61,6 +61,7 @@ const Header = () => (
           ) : (
             <div style={{ width: 100 }} class="login-container">
               <Wallet
+                config={{ contractId: "social.near" }}
                 provides={({ signIn, signOut }) => {
                   return (
                     <button
