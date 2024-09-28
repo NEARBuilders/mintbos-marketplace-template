@@ -15,6 +15,7 @@
     "dev:gateway": "pnpm --filter gateway dev",
     "build": "node scripts/generate-index.mjs --network testnet --output dist",
     "build:testnet": "node scripts/generate-index.mjs --network testnet --output dist",
+    "prod": "http-server -p 3000 dist",
     "web4:deploy": "NEAR_ENV=mainnet npx web4-deploy dist account.near --nearfs",
     "test": "npx playwright test",
     "test:ui": "npx playwright test --ui",
@@ -29,6 +30,7 @@
     "bos-workspace": "^1.0.0-alpha.37",
     "commander": "^12.1.0",
     "concurrently": "^8.2.2",
+    "http-server": "^14.1.1",
     "prettier": "3.3.2",
     "wait-on": "^8.0.0"
   }

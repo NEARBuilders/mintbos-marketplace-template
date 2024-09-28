@@ -23,6 +23,9 @@ importers:
       concurrently:
         specifier: ^8.2.2
         version: 8.2.2
+      http-server:
+        specifier: ^14.1.1
+        version: 14.1.1
       prettier:
         specifier: 3.3.2
         version: 3.3.2
