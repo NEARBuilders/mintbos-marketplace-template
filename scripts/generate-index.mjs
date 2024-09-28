@@ -79,6 +79,7 @@ async function generateIndexHtml() {
   const [_, widget] = bosConfig.index.split("/widget/");
   const metadataPath = path.join(cwd, "widget", `${widget}.metadata.json`);
   const metadata = await readJsonFile(metadataPath);
+  const index = options.network === "mainnet" ? bosConfig.index : bosConfig.overrides[options.network].index;
 
   const bundleUrls = await getBundleUrls(
     bosConfig.gateway.bundleUrl,
@@ -138,7 +139,7 @@ async function generateIndexHtml() {
 </head>
 <body>
     <div id="bw-root">
-        <${bosConfig.gateway.tagName} src="${bosConfig.index}" network="${options.network}"></${bosConfig.gateway.tagName}>
+        <${bosConfig.gateway.tagName} src="${index}" network="${options.network}"></${bosConfig.gateway.tagName}>
     </div>
     <script async="" src="https://ga.jspm.io/npm:es-module-shims@1.10.0/dist/es-module-shims.js" crossorigin="anonymous"></script>
     <script type="importmap">
