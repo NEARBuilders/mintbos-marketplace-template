@@ -76,7 +76,6 @@ return (
             <Cards>
               {nftData &&
                 nftData.map((data, index) => {
-                  /* will porpbably have to move this to mintbos sdk*/
                   const { infoNFT, dataTransaction } = fetchNFTInfo(
                     data?.metadata_id
                   );
@@ -89,6 +88,7 @@ return (
                         key: index,
                         page: "home",
                       }}
+                      key={index}
                     />
                   );
                 })}
