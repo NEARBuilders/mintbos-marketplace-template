@@ -238,7 +238,7 @@ const Card = ({ data }) => {
             }}
             src={
               data.media ||
-              "https://ipfs.near.social/ipfs/bafkreihdiy3ec4epkkx7wc4wevssruen6b7f3oep5ylicnpnyyqzayvcry"
+              "https://ipfs.near.social/ipfs/bafkreiajgp5bmkidwesy2d6tsbdkhyfzjtom2wse2sjcwii227lt5audvq"
             }
             alt="nft"
           />
