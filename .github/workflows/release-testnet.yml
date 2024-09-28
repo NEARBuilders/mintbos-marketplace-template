@@ -8,6 +8,7 @@ jobs:
     with:
       bw-legacy: false
       deploy-env: "testnet"
+      build-env: "testnet"
       app-name: "mintbos-marketplace-template"
       deploy-account-address: "mintbos.testnet"
       signer-account-address: "mintbos.testnet"
