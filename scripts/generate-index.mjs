@@ -55,7 +55,7 @@ async function getBundleUrls(bundleUrl, network, rootDir) {
       throw new Error("CID not found in package.json");
     }
 
-    baseUrl = `${WEB4_IPFS_GATEWAY[network]}${cid}`;
+    baseUrl = `${WEB4_IPFS_GATEWAY["mainnet"]}${cid}`; // TEMP: hardcoded to mainnet
     manifestUrl = `${baseUrl}/asset-manifest.json`;
   } else {
     // Remote URL
