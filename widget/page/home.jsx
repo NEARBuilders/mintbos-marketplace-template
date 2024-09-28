@@ -69,7 +69,7 @@ return (
     ) : (
       <>
         <div className="hero">
-          <h1>Black Dragon Marketplace</h1>
+          <h1>Mintbos Marketplace Template</h1>
         </div>
         {countNFTs > 0 ? (
           <>

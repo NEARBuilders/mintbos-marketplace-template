@@ -4,5 +4,5 @@
   "DEVS": "devs.near",
   "BUILD": "builddao.near",
   "GENADROP": "bos.genadrop.near",
-  "CART_KEY": "blackdragon-cart"
+  "CART_KEY": "mintbos-template-cart"
 }

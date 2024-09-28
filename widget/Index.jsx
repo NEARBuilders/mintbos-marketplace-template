@@ -309,7 +309,7 @@ const Footer = () => (
           <i className="bi bi-telegram"></i>
         </a>
         <a
-          href="https://github.com/NEARBuilders/blackdragon-marketplace-bos"
+          href="https://github.com/NEARBuilders/mintbos-marketplace-template"
           target="_blank"
         >
           <i className="bi bi-github"></i>
