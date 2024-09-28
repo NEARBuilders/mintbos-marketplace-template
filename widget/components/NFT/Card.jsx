@@ -225,27 +225,22 @@ const Card = ({ data }) => {
         })}
       >
         <div className="img-container">
-          <Widget
-            src="${alias_MOB}/widget/NftImage"
-            props={{
-              nft: {
-                tokenId: data?.token_id,
-                contractId: data?.nft_contract_id,
-              },
-              style: {
-                width: size,
-                height: "300px",
-                objectFit: "cover",
-                minWidth: size,
-                minHeight: size,
-                maxWidth: size,
-                maxHeight: size,
-                overflowWrap: "break-word",
-              },
-              className: "",
-              fallbackUrl:
-                "https://ipfs.near.social/ipfs/bafkreihdiy3ec4epkkx7wc4wevssruen6b7f3oep5ylicnpnyyqzayvcry",
+          <img
+            className="nft"
+            style={{
+              width: size,
+              height: "300px",
+              objectFit: "cover",
+              minWidth: size,
+              minHeight: size,
+              maxWidth: size,
+              maxHeight: size,
             }}
+            src={
+              data.media ||
+              "https://ipfs.near.social/ipfs/bafkreihdiy3ec4epkkx7wc4wevssruen6b7f3oep5ylicnpnyyqzayvcry"
+            }
+            alt="nft"
           />
         </div>
         <div className="price-area p-3">
