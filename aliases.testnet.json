@@ -2,6 +2,7 @@
   "MOB": "mike.testnet",
   "NEAR": "discom.testnet",
   "DEVS": "neardevs.testnet",
+  "BUILD": "builddao.testnet",
   "GENADROP": "mintbos.testnet",
   "CART_KEY": "blackdragon-cart"
 }

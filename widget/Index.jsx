@@ -36,7 +36,7 @@ const routerConfig = {
       init: {},
     },
     inspect: {
-      path: "buildhub.near/widget/page.inspect",
+      path: "${alias_BUILD}/widget/page.inspect",
       init: {
         widgetPath: props.widgetPath,
       },

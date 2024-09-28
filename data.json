@@ -1,5 +1,5 @@
 {
-  "example.near": {
+  "mintbos.testnet": {
     "widget": {
       "Index": {
         "metadata": {
@@ -9,10 +9,10 @@
             "website": ""
           },
           "image": {
-            "ipfs_cid": "bafkreicwzq6dlcynhceovrtslsjja2d76b7ysnjih4qmqlk7atre3w2nay"
+            "ipfs_cid": "bafkreihi3qh72njb3ejg7t2mbxuho2vk447kzkvpjtmulsb2njd6m2cfgi"
           },
           "backgroundImage": {
-            "ipfs_cid": "bafkreicwzq6dlcynhceovrtslsjja2d76b7ysnjih4qmqlk7atre3w2nay"
+            "ipfs_cid": "bafkreihi3qh72njb3ejg7t2mbxuho2vk447kzkvpjtmulsb2njd6m2cfgi"
           },
           "tags": {
             "bitte": "",

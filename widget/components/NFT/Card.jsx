@@ -1,5 +1,5 @@
 const Card = ({ data }) => {
-  const { href } = VM.require("buildhub.near/widget/lib.url") || {
+  const { href } = VM.require("${alias_DEVS}/widget/lib.url") || {
     href: () => {},
   };
   const { addItemsToCart, removeItemsFromCart, itemExistsInCart } = VM.require(
