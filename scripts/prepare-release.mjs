@@ -92,10 +92,10 @@ async function main() {
     console.log("Preparing a release...");
 
     await runWithSpinner("Building production version", () =>
-      exec("yarn prod")
+      exec("pnpm prod")
     );
     const output = await runWithSpinner("Creating CAR file", () =>
-      exec("yarn nearfs:publish-library:create:car")
+      exec("pnpm nearfs:publish-library:create:car")
     );
 
     const lines = output.trim().split("\n");
@@ -106,7 +106,7 @@ async function main() {
     console.log(`CID: ${cid}`);
 
     await runWithSpinner("Uploading CAR file", () =>
-      exec("yarn nearfs:publish-library:upload:car", {
+      exec("pnpm nearfs:publish-library:upload:car", {
         NODE_ENV: network,
         NEAR_SIGNER_KEY: signerKey,
         NEAR_SIGNER_ACCOUNT: signerAccount,
@@ -131,7 +131,7 @@ async function cleanup() {
     currentChildProcess.kill("SIGINT");
   }
   try {
-    await exec("yarn clean");
+    await exec("pnpm clean");
     console.log("\nCleanup completed.");
   } catch (error) {
     console.error("\nError during cleanup:", error);

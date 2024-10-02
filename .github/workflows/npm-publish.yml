@@ -11,14 +11,20 @@ jobs:
       contents: read
       packages: write
     steps:
-      - uses: actions/checkout@v3
-      - uses: actions/setup-node@v3
+      - uses: actions/checkout@v4
+      - name: Install pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 9
+      - name: Use Node.js 20
+        uses: actions/setup-node@v4
         with:
           node-version: 20
+          cache: "pnpm"
           registry-url: "https://registry.npmjs.org"
-      - run: yarn install
+      - run: pnpm install
       - name: Prepare the release
-        run: yarn prepare:release devs.near ${{secrets.DEVS_SIGNER_PRIVATE_KEY}}
+        run: pnpm prepare:release devs.near ${{secrets.DEVS_SIGNER_PRIVATE_KEY}}
       - name: Commit and push updated package.json (nearfs cid)
         run: |
           git config --local user.email "action@github.com"

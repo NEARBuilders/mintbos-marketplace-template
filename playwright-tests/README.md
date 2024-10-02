@@ -28,7 +28,7 @@ To be able to run the [playwright](https://playwright.dev) tests, you first need
 When the dependencies are set up, you can run the test suite in your terminal:
 
 ```bash
-yarn test
+pnpm test
 ```
 
 
@@ -36,7 +36,7 @@ yarn test
 To run tests visually in the playwright UI, you can use the following command:
 
 ```bash
-yarn test:ui
+pnpm test:ui
 ```
 
 This will open the playwright UI in a browser, where you can run single tests, and also inspect visually.
@@ -44,7 +44,7 @@ This will open the playwright UI in a browser, where you can run single tests, a
 If you want to use the playwright UI from a github codespace, you can use this command:
 
 ```bash
-yarn test:ui:codespaces
+pnpm test:ui:codespaces
 ```
 
 Or to run tests through VS Code, see [Getting started - VS Code](https://playwright.dev/docs/getting-started-vscode).

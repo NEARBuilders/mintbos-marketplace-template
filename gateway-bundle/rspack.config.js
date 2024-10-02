@@ -65,7 +65,7 @@ module.exports = function (env) {
           path: require.resolve("path-browserify"),
           zlib: require.resolve("browserify-zlib"),
         },
-        // Fix for using `yarn link "near-social-vm"`
+        // Fix for using `pnpm link "near-social-vm"`
         alias: {
           react: path.resolve(__dirname, "./node_modules/react"),
           "react-dom": path.resolve(__dirname, "./node_modules/react-dom"),
