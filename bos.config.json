@@ -12,10 +12,10 @@
     "uploadApiHeaders": {}
   },
   "overrides": {
-        "testnet": {
-          "index": "mintbos.testnet/widget/Index",
-          "account": "mintbos.testnet",
-          "aliases": ["./aliases.testnet.json"]
-        }
-      }
+    "testnet": {
+      "index": "mintbos.testnet/widget/Index",
+      "account": "mintbos.testnet",
+      "aliases": ["./aliases.testnet.json"]
+    }
+  }
 }

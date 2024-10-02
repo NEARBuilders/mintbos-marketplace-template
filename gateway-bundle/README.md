@@ -77,5 +77,7 @@ This final command will upload the `/dist` to [NEARFS](https://github.com/vgrich
 ## Development
 
 1. Configure [bos.config.json](../bos.config.json) `gateway.bundleUrl` to be a relative path to this custom gateway's dist, e.g. `./gateway-bundle/dist`
-2. Make sure you have the dev command running for this, `pnpm run dev:gateway` from root, or `pnpm run dev` from here.
-3. Once there has been as successful build, this prepares the `main.bundle.js` needed 
+2. Make sure you have the dev command running for this, `pnpm run dev:gateway` from root, or `pnpm run dev` from this directory.
+3. Once there has been as successful build, this prepares the `asset-manifest.json` needed to inject scripts into dev index.html.
+4. Run the dev command in the root `pnpm run dev`. This will serve your widgets through the custom gateway.
+5. Reload the page after making changes to the gateway-bundle.
