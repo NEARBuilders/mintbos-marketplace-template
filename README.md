@@ -235,8 +235,8 @@ This build command populates metadata from the index widget's metadata json, and
 
 Rather than deploying to a hosting provider like Vercel, this repository comes equipped with the scripts necessary to deploy to [Web4](https://github.com/vgrichina/web4), for fully decentralized web hosting. For full documentation, refer to [web4-deploy](https://github.com/vgrichina/web4-deploy).
 
-1. Build the distribution bundle, `pnpm run build`. This will populate metadata via the index widget's metadata json, and use details from bos.config.json to consturct the `index.html`.
-2. Be sure to have deployed a web4 smart contract, such as the [web4-min-contract](https://github.com/vgrichina/web4-min-contract) to web4.YOUR_ACCOUNT.near. If deploying for the first time, you can replace the next step with `NEAR_ENV=testnet npx elliotBraem/web4-deploy#fix/update-min-contract ./dist web4.[YOUR_ACCOUNT].testnet --deploy-contract --nearfs`
+1. Build the distribution bundle, `pnpm run build`. This will populate metadata via the index widget's metadata json, and use details from bos.config.json to construct the `index.html`.
+2. Be sure to have deployed a web4 smart contract, such as the [web4-min-contract](https://github.com/vgrichina/web4-min-contract) to web4.YOUR_ACCOUNT.near. If deploying for the first time, you can replace the next step with `NEAR_ENV=testnet npx vgrichina/web4-deploy ./dist web4.[YOUR_ACCOUNT].testnet --deploy-contract --nearfs`
 3. Configure with the web4 account and run `pnpm run web4:deploy`
 
 This final command will upload the `/dist` to [NEARFS](https://github.com/vgrichina/nearfs) and then call `web4_setStaticUrl` on your web4 contract to point to this uploaded bundle.
