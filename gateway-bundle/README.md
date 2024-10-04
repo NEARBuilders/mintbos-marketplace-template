@@ -68,11 +68,20 @@ After uploading, it normally takes some minutes before the files are visible on 
 
 Rather than deploying to a hosting provider like Vercel, this repository comes equipped with the scripts necessary to deploy to [Web4](https://github.com/vgrichina/web4), for fully decentralized web hosting. For full documentation, refer to [web4-deploy](https://github.com/vgrichina/web4-deploy).
 
-1. Build the distribution bundle, `pnpm run build`
-2. Be sure to have deployed a web4 smart contract, such as the [web4-min-contract](https://github.com/vgrichina/web4-min-contract) to web4.YOUR_ACCOUNT.near. If deploying for the first time, you can replace the next step with `NEAR_ENV=testnet npx elliotBraem/web4-deploy#fix/update-min-contract ./dist web4.[YOUR_ACCOUNT].testnet --deploy-contract --nearfs`
-3. Configure with the web4 account and run `pnpm run web4:deploy`
+**Prerequisite**: Have a web4 contract deployed. If you have not deployed one, create a [web4 near subaccount](https://docs.near.org/tools/near-cli#create) (web4.YOUR_ACCOUNT.near) before continuing.
 
-This final command will upload the `/dist` to [NEARFS](https://github.com/vgrichina/nearfs) and then call `web4_setStaticUrl` on your web4 contract to point to this uploaded bundle.
+1. Build the distribution bundle, `pnpm run build`
+2. Use [web4-deploy](https://github.com/vgrichina/web4-deploy) to deploy a web4 smart contract:
+
+If deploying for the first time, append `--deploy-contract` to automatically deploy a [minimum web4 contract](https://github.com/vgrichina/web4-min-contract).
+
+```cmd
+NEAR_ENV=testnet npx vgrichina/web4-deploy ./dist web4.[YOUR_ACCOUNT].testnet --nearfs
+```
+
+This will upload the build output (`./dist`) to [nearfs](https://github.com/vgrichina/nearfs) then set this will set the static url for web4_get to return.
+
+Going forward, you can also configure and use the `web4:deploy` command with the correct network and web4 account and run `pnpm run web4:deploy`.
 
 ## Development
 
